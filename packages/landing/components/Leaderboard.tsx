@@ -3,6 +3,7 @@
 import { useLiveData, type LiveData } from "@/lib/useLiveData";
 import { MODELS, resolveModel } from "@/lib/models";
 import { formatCompact, formatUsd, relativeTime } from "@/lib/format";
+import { logoForKey } from "@/components/BrandLogos";
 import type { LeaderboardRow } from "@/lib/supabase";
 
 const EMPTY_ROW: Omit<LeaderboardRow, "agent"> = {
@@ -37,6 +38,7 @@ function Row({ row, rank }: { row: LeaderboardRow; rank: number }) {
   const model = resolveModel(row.agent);
   const isLeader = rank === 1 && row.total_tokens > 0;
   const hasData = row.total_tokens > 0 || row.installs > 0;
+  const Logo = logoForKey(row.agent);
 
   return (
     <li className="row-hover -mx-3 flex items-center gap-4 rounded-lg border-t border-line px-3 py-3.5">
@@ -46,6 +48,12 @@ function Row({ row, rank }: { row: LeaderboardRow; rank: number }) {
         }`}
       >
         {rank.toString().padStart(2, "0")}
+      </span>
+      <span
+        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-line bg-void-2"
+        aria-hidden
+      >
+        <Logo size={17} />
       </span>
       <div className="min-w-0 flex-1">
         <span

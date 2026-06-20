@@ -108,15 +108,13 @@ function ExternalIcon() {
   );
 }
 
-/** A quiet square tile holding an agent's inline logo mark, tinted by brand. */
+/** A quiet square tile holding an agent's real inline brand mark. */
 function LogoTile({
   agentId,
-  color,
   size = 18,
   tile = 34,
 }: {
   agentId: string;
-  color: string;
   size?: number;
   tile?: number;
 }) {
@@ -124,10 +122,10 @@ function LogoTile({
   return (
     <span
       className="flex shrink-0 items-center justify-center rounded-lg border border-hairline bg-canvas-raised"
-      style={{ width: tile, height: tile, color }}
+      style={{ width: tile, height: tile }}
       aria-hidden
     >
-      <Logo size={size} />
+      <Logo size={size} surface="light" />
     </span>
   );
 }
@@ -216,7 +214,7 @@ export function AgentInstaller() {
                       : "text-ink-muted hover:bg-canvas hover:text-ink"
                   }`}
                 >
-                  <LogoTile agentId={agent.id} color={agent.color} tile={28} size={16} />
+                  <LogoTile agentId={agent.id} tile={28} size={16} />
                   <span className="flex min-w-0 flex-col">
                     <span className="truncate leading-tight">{agent.name}</span>
                     <span className="hidden truncate text-[0.7rem] font-normal text-ink-faint lg:block">
@@ -245,7 +243,7 @@ export function AgentInstaller() {
         >
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div className="flex items-start gap-3.5">
-              <LogoTile agentId={active.id} color={active.color} tile={44} size={24} />
+              <LogoTile agentId={active.id} tile={44} size={24} />
               <div>
                 <h3 className="font-display text-xl font-medium tracking-tight text-ink">
                   {active.name}
