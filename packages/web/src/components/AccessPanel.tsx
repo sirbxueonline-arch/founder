@@ -192,7 +192,7 @@ export function AccessPanel({ onClose }: AccessPanelProps) {
         aria-label="Close access panel"
         onClick={onClose}
         className="absolute inset-0 h-full w-full"
-        style={{ backgroundColor: "color-mix(in srgb, var(--color-void) 70%, transparent)" }}
+        style={{ backgroundColor: "color-mix(in srgb, var(--color-text) 35%, transparent)" }}
       />
 
       {/* Sheet: full-screen on mobile, right-side panel on desktop. */}
@@ -292,8 +292,12 @@ function PhoneSection({ selected, reachable, selectedUrl, onSelectUrl }: PhoneSe
       <SectionTitle>Open on your phone</SectionTitle>
 
       <div className="mt-3 flex flex-col items-center gap-3">
-        {/* White QR tile so it scans against the dark theme. */}
-        <div className="rounded-lg bg-white p-3">
+        {/* White QR tile with a hairline so it reads as a distinct tile on the
+            light card (and still scans cleanly). */}
+        <div
+          className="rounded-lg bg-white p-3"
+          style={{ border: "1px solid var(--color-line)" }}
+        >
           <QRCodeSVG value={selected.url} size={180} level="M" includeMargin={false} />
         </div>
         <p className="mono text-center text-[0.625rem] leading-tight" style={{ color: "var(--color-cool)" }}>
@@ -437,7 +441,7 @@ function AddressRow({ addr }: { addr: AccessAddress }) {
       ) : null}
 
       {!addr.reachable ? (
-        <p className="mono mt-1 text-[0.5625rem] leading-tight" style={{ color: "var(--color-signal)" }}>
+        <p className="mono mt-1 text-[0.5625rem] leading-tight" style={{ color: "var(--color-signal-ink)" }}>
           listed but needs <code style={{ color: "var(--color-text)" }}>HOST=0.0.0.0 mc start</code> to reach
           from other devices
         </p>
@@ -484,7 +488,10 @@ function TunnelSection({ tunnel, busy, error, onStart, onStop }: TunnelSectionPr
 
           {tunnel.state === "on" && tunnel.url ? (
             <div className="flex flex-col items-center gap-2">
-              <div className="rounded-lg bg-white p-3">
+              <div
+                className="rounded-lg bg-white p-3"
+                style={{ border: "1px solid var(--color-line)" }}
+              >
                 <QRCodeSVG value={tunnel.url} size={160} level="M" includeMargin={false} />
               </div>
               <p

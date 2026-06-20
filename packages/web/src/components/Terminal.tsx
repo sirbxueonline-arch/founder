@@ -63,12 +63,23 @@ const RESIZE_DEBOUNCE_MS = 80;
 const RECONNECT_DELAY_MS = 600;
 
 /**
- * Telemetry-console theme built from the index.css palette tokens.
- * Background --void, foreground --text, cursor/selection in --signal/--cool,
- * the ANSI palette tuned for a calm dark console.
+ * The dark "console" background for the xterm pane. The dashboard around it is
+ * light (Aqua canvas), but Claude Code's TUI is built for a dark terminal, so
+ * the terminal pane stays a dark inset. This hex is intentionally hard-coded
+ * (NOT --color-void, which is now the light canvas) so the console stays dark
+ * regardless of the surrounding light theme. The xterm container padding uses
+ * the same value so there is no light gutter around the canvas.
+ */
+const CONSOLE_BG = "#0d1014";
+
+/**
+ * Telemetry-console theme — a calm dark console that sits as an inset within the
+ * light dashboard. Background is the dark CONSOLE_BG, foreground/ANSI tuned for
+ * legibility on it, cursor in amber (--signal). These are deliberately dark hex
+ * values, decoupled from the now-light surface tokens.
  */
 const TELEMETRY_THEME: ITheme = {
-  background: "#0d1014", // --void
+  background: CONSOLE_BG, // dark console inset (not the light canvas)
   foreground: "#e6eaf0", // --text
   cursor: "#f2a23c", // --signal
   cursorAccent: "#0d1014", // --void (text under the block cursor)
@@ -358,7 +369,9 @@ export const Terminal = forwardRef<TerminalHandle, TerminalProps>(function Termi
     <div
       ref={containerRef}
       className="h-full w-full overflow-hidden"
-      style={{ backgroundColor: "var(--color-void)", padding: "6px" }}
+      // The dark console inset — hard-coded dark (NOT the light canvas) so the
+      // xterm canvas has no light gutter around it.
+      style={{ backgroundColor: CONSOLE_BG, padding: "6px" }}
       role="group"
       aria-label={`Terminal ${shell}`}
       onClick={() => termRef.current?.focus()}

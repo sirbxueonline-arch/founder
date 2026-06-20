@@ -46,6 +46,14 @@ interface TermTab {
 
 const STORAGE_KEY = "mc.term.tabs";
 
+/**
+ * The dark "console" background for the terminal pane region. The dashboard is
+ * light, but the terminal stays a dark inset (Claude Code's TUI needs a dark
+ * bg). Hard-coded dark — matches Terminal.tsx's CONSOLE_BG / xterm background —
+ * so it is decoupled from the now-light surface tokens.
+ */
+const TERMINAL_CONSOLE_BG = "#0d1014";
+
 interface StoredTab {
   id: string;
   shell: string;
@@ -99,7 +107,7 @@ function adoptShell(shell: string): string {
 
 /**
  * Secure-context-safe random id. `crypto.randomUUID()` only exists in a secure
- * context (HTTPS or localhost); when Founder is opened over plain HTTP on a LAN
+ * context (HTTPS or localhost); when Foundrr is opened over plain HTTP on a LAN
  * IP (e.g. http://192.168.x.x:7878 from a phone) it is undefined and throws.
  * Fall back to getRandomValues, then to a non-crypto id — these are just local
  * tab identifiers, not security tokens.
@@ -271,9 +279,11 @@ export function TerminalTabs({ model }: TerminalTabsProps) {
 
   return (
     <div className="flex h-full min-h-0 flex-col">
-      {/* Tab bar — minimal, hairline bottom only, sits on --void so the whole
-          terminal reads as one Aqua dark frame. Active tab is tinted --signal
-          (the live frame); no heavy borders. */}
+      {/* Tab bar — a LIGHT strip above the dark console inset: hairline bottom,
+          sits on the canvas so it reads as part of the light dashboard chrome.
+          The active tab is marked with a thin amber underline + amber-ink label
+          (the live frame); inactive tabs carry no border — whitespace separates
+          them. */}
       <div
         className="flex items-center gap-1 border-b p-1.5 hairline"
         role="tablist"
@@ -288,7 +298,9 @@ export function TerminalTabs({ model }: TerminalTabsProps) {
                 key={tab.id}
                 className="mono flex shrink-0 items-center rounded-md text-xs"
                 style={{
-                  color: selected ? "var(--color-signal)" : "var(--color-muted)",
+                  // Amber-ink label on the active tab (AA on the light strip);
+                  // inactive tabs read muted.
+                  color: selected ? "var(--color-signal-ink)" : "var(--color-muted)",
                   backgroundColor: "transparent",
                   // A thin amber underline marks the active tab; inactive tabs
                   // carry no border at all — whitespace separates them.
@@ -342,19 +354,24 @@ export function TerminalTabs({ model }: TerminalTabsProps) {
         </div>
       </div>
 
-      {/* Active terminal (all mounted; inactive hidden to preserve sockets) */}
-      <div className="relative min-h-0 flex-1">
+      {/* The dark console inset: the xterm panes (or the empty state) live on a
+          dark background so Claude Code's TUI colors read correctly, framed as a
+          recessed dark pane within the light terminal chrome. */}
+      <div
+        className="relative min-h-0 flex-1 overflow-hidden"
+        style={{ backgroundColor: TERMINAL_CONSOLE_BG }}
+      >
         {tabs.length === 0 ? (
           <div
             className="flex h-full flex-col items-center justify-center gap-3 px-6 text-center"
-            style={{ backgroundColor: "var(--color-void)" }}
+            style={{ backgroundColor: TERMINAL_CONSOLE_BG }}
           >
-            <p className="text-sm" style={{ color: "var(--color-muted)" }}>
+            <p className="text-sm" style={{ color: "#8a95a3" }}>
               No terminal open.
             </p>
-            <p className="text-sm" style={{ color: "var(--color-faint)" }}>
-              Start a <span className="mono" style={{ color: "var(--color-cool)" }}>+ Shell</span> or{" "}
-              <span className="mono" style={{ color: "var(--color-signal)" }}>{agentLabel}</span> session.
+            <p className="text-sm" style={{ color: "#5b6573" }}>
+              Start a <span className="mono" style={{ color: "#56b6c2" }}>+ Shell</span> or{" "}
+              <span className="mono" style={{ color: "#f2a23c" }}>{agentLabel}</span> session.
             </p>
           </div>
         ) : (

@@ -54,7 +54,7 @@ async function runLink(): Promise<void> {
   }
 
   if (mode === "own") {
-    process.stdout.write(`\n${color.bold("Mission Control — Telegram link (own bot)")}\n\n`);
+    process.stdout.write(`\n${color.bold("Foundrr — Telegram link (own bot)")}\n\n`);
     process.stdout.write(
       `From Telegram, message your bot: ${color.bold("/link <ACCESS_TOKEN>")}\n`,
     );
@@ -70,7 +70,7 @@ async function runLink(): Promise<void> {
   const sharedBot = new SharedBot(installId);
   const result = await sharedBot.link();
 
-  process.stdout.write(`\n${color.bold("Mission Control — Telegram link (shared bot)")}\n\n`);
+  process.stdout.write(`\n${color.bold("Foundrr — Telegram link (shared bot)")}\n\n`);
   if (!result) {
     err("Could not reach the shared bot relay. Check your connection and retry.");
     dim(`(install id: ${installId})`);
@@ -107,7 +107,7 @@ function runMode(arg: string | undefined): void {
 
   ok(`Telegram mode set to ${color.bold(arg)}.`);
   if (arg === "shared") {
-    dim("Link the Founder shared bot: mc telegram link");
+    dim("Link the Foundrr shared bot: mc telegram link");
   } else if (arg === "own") {
     dim("Configure your own bot: mc telegram setup <botToken>, then mc telegram link");
   } else {
@@ -119,7 +119,7 @@ function runMode(arg: string | undefined): void {
 /** `mc telegram setup <botToken>` — store a bot token for "own" mode. */
 function runSetup(botToken: string | undefined): void {
   if (!botToken || botToken.trim().length === 0) {
-    process.stdout.write(`\n${color.bold("Mission Control — Telegram setup (own bot)")}\n\n`);
+    process.stdout.write(`\n${color.bold("Foundrr — Telegram setup (own bot)")}\n\n`);
     dim(BOTFATHER_HELP);
     process.stdout.write("\n");
     return;
@@ -162,7 +162,7 @@ async function runStatus(): Promise<void> {
   }
   const installId = resolveInstallId(config.home);
 
-  process.stdout.write(`\n${color.bold("Mission Control — Telegram status")}\n\n`);
+  process.stdout.write(`\n${color.bold("Foundrr — Telegram status")}\n\n`);
   process.stdout.write(`  Mode      : ${color.cyan(mode)}\n`);
   process.stdout.write(`  Install id: ${color.dim(installId)}\n`);
 

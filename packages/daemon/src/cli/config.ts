@@ -35,7 +35,7 @@ function showModel(): void {
   }
 
   const info = modelByKey(current);
-  process.stdout.write(`\n${color.bold("Mission Control — model")}\n\n`);
+  process.stdout.write(`\n${color.bold("Foundrr — model")}\n\n`);
   process.stdout.write(
     `  Current: ${color.green(current)}${info ? ` ${color.dim(`(${info.name} — ${info.vendor})`)}` : ""}\n\n`,
   );

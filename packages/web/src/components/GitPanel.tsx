@@ -169,7 +169,7 @@ export function GitPanel({ cwd, project, onClose }: GitPanelProps) {
         aria-label="Close git review"
         onClick={onClose}
         className="absolute inset-0 h-full w-full"
-        style={{ backgroundColor: "color-mix(in srgb, var(--color-void) 70%, transparent)" }}
+        style={{ backgroundColor: "color-mix(in srgb, var(--color-text) 35%, transparent)" }}
       />
 
       {/* Sheet: full-screen on mobile, right-side panel on desktop. */}
@@ -263,7 +263,7 @@ function Header({ project, cwd, status, loadState, onClose }: HeaderProps) {
                 </span>
               ) : null}
               {status.behind > 0 ? (
-                <span className="mono text-[0.625rem]" style={{ color: "var(--color-signal)" }}>
+                <span className="mono text-[0.625rem]" style={{ color: "var(--color-signal-ink)" }}>
                   ↓{status.behind}
                 </span>
               ) : null}
@@ -416,7 +416,7 @@ function Footer({
           onChange={(e) => onMessageChange(e.target.value)}
           className="rounded-md px-2 py-1.5 text-sm outline-none disabled:opacity-50"
           style={{
-            backgroundColor: "var(--color-void)",
+            backgroundColor: "var(--color-inset)",
             color: "var(--color-text)",
             border: "1px solid var(--color-line)",
           }}

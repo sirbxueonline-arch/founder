@@ -148,7 +148,7 @@ function checkWebBuild(): CheckResult {
 }
 
 export async function runDoctor(): Promise<void> {
-  process.stdout.write(`\n${color.bold("Mission Control — doctor")}\n\n`);
+  process.stdout.write(`\n${color.bold("Foundrr — doctor")}\n\n`);
 
   const results: CheckResult[] = [
     checkNode(),

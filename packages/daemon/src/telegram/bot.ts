@@ -284,7 +284,7 @@ export class TelegramService {
     } else {
       await ctx.reply(
         "No active terminal to send to (open one in the dashboard's Terminal tab first). " +
-          "Quick-replies can only reach terminals Mission Control spawned, not external claude sessions.",
+          "Quick-replies can only reach terminals Foundrr spawned, not external claude sessions.",
       );
     }
   }

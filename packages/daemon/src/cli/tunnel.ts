@@ -32,7 +32,7 @@ function resolvedPort(): number {
 }
 
 function printSecurityWarning(port: number): void {
-  process.stdout.write(`\n${color.bold("Mission Control — public tunnel")}\n\n`);
+  process.stdout.write(`\n${color.bold("Foundrr — public tunnel")}\n\n`);
   process.stdout.write(
     `${color.red(color.bold("!! STOP AND READ — THIS EXPOSES A SHELL TO THE INTERNET !!"))}\n\n`,
   );

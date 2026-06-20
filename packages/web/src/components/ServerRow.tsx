@@ -258,7 +258,7 @@ export function ServerRow({ entry, pending, error, onAction }: ServerRowProps) {
       {isExposed ? (
         <p
           className="mono text-[0.625rem] leading-tight"
-          style={{ color: "var(--color-signal)" }}
+          style={{ color: "var(--color-signal-ink)" }}
         >
           {/* Surface the same-origin preview URL as copyable text. */}
           Previewing →{" "}

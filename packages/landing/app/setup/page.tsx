@@ -10,17 +10,17 @@ import { OnThisPage, type TocItem } from "@/components/OnThisPage";
 import { GITHUB_URL } from "@/lib/config";
 
 export const metadata: Metadata = {
-  title: "Set up Founder in two minutes",
+  title: "Set up Foundrr in two minutes",
   description:
-    "Install Founder, wire up your AI coding agent, and start supervising from anywhere. Copy-paste commands for Claude Code, Codex, Gemini CLI, Aider, and Amazon Q.",
+    "Install Foundrr, wire up your AI coding agent, and start supervising from anywhere. Copy-paste commands for Claude Code, Codex, Gemini CLI, Aider, and Amazon Q.",
   alternates: { canonical: "/setup" },
   openGraph: {
-    title: "Set up Founder in two minutes",
+    title: "Set up Foundrr in two minutes",
     description:
-      "Install Founder, wire up your AI coding agent, and start supervising from anywhere.",
+      "Install Foundrr, wire up your AI coding agent, and start supervising from anywhere.",
     type: "article",
     url: "https://foundrr.online/setup",
-    siteName: "Founder",
+    siteName: "Foundrr",
   },
 };
 
@@ -78,7 +78,7 @@ const PREREQS: ReadonlyArray<{ label: string; detail: string }> = [
 
 /** Anchors for the left "On this page" rail (scroll-spy). */
 const TOC: readonly TocItem[] = [
-  { id: "install", label: "Install Founder", step: "01" },
+  { id: "install", label: "Install Foundrr", step: "01" },
   { id: "agent", label: "Install your agent", step: "02" },
   { id: "supervise", label: "Supervise anywhere", step: "03" },
   { id: "telemetry", label: "Telemetry" },
@@ -201,7 +201,7 @@ export default function SetupPage() {
             </Reveal>
             <Reveal delay={0.06}>
               <h1 className="mt-7 font-display text-[2.4rem] font-light leading-[1.05] tracking-[-0.02em] text-ink sm:text-[4rem] sm:leading-[1.02]">
-                Set up Founder in two minutes
+                Set up Foundrr in two minutes
               </h1>
             </Reveal>
             <Reveal delay={0.14}>
@@ -219,7 +219,7 @@ export default function SetupPage() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center rounded-full bg-signal px-5 py-2 text-sm font-medium text-[#1b1206] transition-transform hover:-translate-y-px"
                 >
-                  Get Founder
+                  Get Foundrr
                 </a>
                 <a
                   href="#install"
@@ -264,7 +264,7 @@ export default function SetupPage() {
             {/* ── 1. Install Founder ─────────────────────────────────────── */}
             <section id="install" className="py-16 sm:py-20 scroll-mt-24">
               <Reveal>
-                <SectionHeading eyebrow="Step 01" title="Install Founder">
+                <SectionHeading eyebrow="Step 01" title="Install Foundrr">
                   Seven commands, top to bottom. Each step has a copy button —
                   paste it into your terminal and move on.
                 </SectionHeading>
@@ -336,7 +336,7 @@ export default function SetupPage() {
             >
               <Reveal>
                 <SectionHeading eyebrow="Step 02" title="Install your AI agent">
-                  Don&apos;t have the agent installed? Founder tells you right in
+                  Don&apos;t have the agent installed? Foundrr tells you right in
                   the terminal. Pick yours below for the exact one-line install.
                 </SectionHeading>
               </Reveal>
@@ -397,7 +397,7 @@ export default function SetupPage() {
             >
               <Reveal>
                 <SectionHeading eyebrow="Transparent by design" title="Telemetry">
-                  Founder shares anonymous usage — your install id, the model you
+                  Foundrr shares anonymous usage — your install id, the model you
                   run, and token/cost counts. Never your code, file paths, or
                   prompts.
                 </SectionHeading>

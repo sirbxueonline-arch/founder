@@ -51,7 +51,7 @@ function readState(dbPath: string): { model: string; telegramMode: string } {
 }
 
 export function runSetup(): void {
-  process.stdout.write(`\n${color.bold("Mission Control — setup")}\n`);
+  process.stdout.write(`\n${color.bold("Foundrr — setup")}\n`);
   dim("Guided first-run. Safe to re-run any time — every step is idempotent.\n");
 
   // 1. Home dir + token. loadConfig() creates ~/.mission-control and persists a
@@ -92,7 +92,7 @@ export function runSetup(): void {
       "see all keys with `mc config model show`.",
   );
   process.stdout.write(
-    `   ${color.cyan("•")} Link the leash (shared Founder bot ` +
+    `   ${color.cyan("•")} Link the leash (shared Foundrr bot ` +
       `${color.bold(`@${SHARED_BOT_USERNAME}`)}): ${color.bold("mc telegram link")}\n`,
   );
   dim(

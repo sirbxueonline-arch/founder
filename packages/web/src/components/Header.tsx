@@ -1,5 +1,5 @@
 /**
- * Header — the FOUNDER wordmark, a connection indicator, a live count
+ * Header — the Foundrr wordmark, a connection indicator, a live count
  * of active agents, and a faint sweeping activity line that only animates when
  * at least one agent is active (the page is otherwise calm and cool).
  */
@@ -30,13 +30,20 @@ interface HeaderProps {
 
 interface ConnStyle {
   label: string;
-  color: string;
+  /** Status-dot fill (bright accent OK as a fill). */
+  dot: string;
+  /** Status text (AA on white — amber uses the deeper amber-ink). */
+  text: string;
 }
 
 const CONN: Record<StreamStatus, ConnStyle> = {
-  open: { label: "CONNECTED", color: "var(--color-ok)" },
-  connecting: { label: "CONNECTING", color: "var(--color-cool)" },
-  reconnecting: { label: "RECONNECTING", color: "var(--color-signal)" },
+  open: { label: "CONNECTED", dot: "var(--color-ok)", text: "var(--color-ok)" },
+  connecting: { label: "CONNECTING", dot: "var(--color-cool)", text: "var(--color-cool)" },
+  reconnecting: {
+    label: "RECONNECTING",
+    dot: "var(--color-signal)",
+    text: "var(--color-signal-ink)",
+  },
 };
 
 export function Header({
@@ -82,21 +89,23 @@ export function Header({
             className="flex shrink-0 items-baseline gap-1.5 text-sm font-light tracking-tight sm:text-base"
             style={{ color: "var(--color-text)" }}
           >
-            {/* ◆ diamond wordmark — the same family mark as the landing nav. */}
-            <span aria-hidden="true" style={{ color: "var(--color-signal)" }}>
+            {/* ◆ diamond wordmark — the same family mark as the landing nav.
+                Deeper amber-ink so the small glyph stays AA on white. */}
+            <span aria-hidden="true" style={{ color: "var(--color-signal-ink)" }}>
               ◆
             </span>
-            <span>Founder</span>
+            <span>Foundrr</span>
           </span>
           {host ? (
             <span className="mono hidden truncate text-xs sm:inline" style={{ color: "var(--color-faint)" }}>
               {host}
             </span>
           ) : null}
-          {/* Only the live-agents metric is tinted --signal; idle reads neutral. */}
+          {/* Only the live-agents metric is tinted amber; idle reads neutral.
+              Amber-ink keeps the count AA on white. */}
           <span
             className="mono shrink-0 text-xs tabular-nums"
-            style={{ color: anyActive ? "var(--color-signal)" : "var(--color-faint)" }}
+            style={{ color: anyActive ? "var(--color-signal-ink)" : "var(--color-faint)" }}
           >
             {anyActive ? `${activeCount} active` : "idle"}
           </span>
@@ -141,13 +150,13 @@ export function Header({
 
           <span
             className="inline-block h-1.5 w-1.5 shrink-0 rounded-full"
-            style={{ backgroundColor: conn.color }}
+            style={{ backgroundColor: conn.dot }}
             aria-hidden="true"
           />
           {/* CONNECTED/CONNECTING label is secondary — the dot carries it on mobile. */}
           <span
             className="mono hidden text-[0.625rem] tracking-wider sm:inline"
-            style={{ color: conn.color }}
+            style={{ color: conn.text }}
             role="status"
             aria-live="polite"
           >

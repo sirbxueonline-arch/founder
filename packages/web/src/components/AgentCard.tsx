@@ -41,7 +41,8 @@ function activityColor(kind: CurrentActivity["kind"]): string {
       // the doc — it's "what the agent is doing", not a status alarm.
       return "var(--color-cool)";
     case "waiting":
-      return "var(--color-signal)";
+      // Amber-ink so the "waiting" activity line stays AA on the light card.
+      return "var(--color-signal-ink)";
     case "error":
       return "var(--color-alert)";
     case "idle":
@@ -95,7 +96,7 @@ export function AgentCard({ session, now, cost }: AgentCardProps) {
           className="mono flex items-baseline gap-2 text-xs leading-none"
           aria-label={`${usd(cost.usd)} this session, ${compactTokens(cost.tokens)} tokens`}
         >
-          <span className="tabular-nums" style={{ color: "var(--color-signal)" }}>
+          <span className="tabular-nums" style={{ color: "var(--color-signal-ink)" }}>
             {usd(cost.usd)}
           </span>
           <span className="tabular-nums" style={{ color: "var(--color-muted)" }}>

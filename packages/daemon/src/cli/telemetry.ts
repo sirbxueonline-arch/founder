@@ -68,7 +68,7 @@ function runShare(arg: string | undefined): void {
     }
     const installId = resolveInstallId(config.home);
 
-    process.stdout.write(`\n${color.bold("Mission Control — usage sharing")}\n\n`);
+    process.stdout.write(`\n${color.bold("Foundrr — usage sharing")}\n\n`);
     process.stdout.write(
       `  Sharing  : ${settings.telemetryShare ? color.green("ON") : color.red("OFF")}\n`,
     );
@@ -113,7 +113,7 @@ export function runTelemetry(sub: string | undefined, arg?: string): void {
   const config = loadConfig();
   const env = telemetryEnv(config.port);
 
-  process.stdout.write(`\n${color.bold("Mission Control — telemetry")}\n\n`);
+  process.stdout.write(`\n${color.bold("Foundrr — telemetry")}\n\n`);
   dim("Point Claude Code's OpenTelemetry exporter at this daemon:");
   process.stdout.write("\n");
 

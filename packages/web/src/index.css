@@ -1,26 +1,52 @@
-/* Founder — Aqua "Dashboard expression" design system (Tailwind v4)
-   The dashboard lives on --void full-time: Aqua's dark side come alive with
-   data. It adopts Aqua's *system* — restraint, single-amber discipline,
-   light-weight humanist headings, JetBrains Mono for every number/id/port,
-   1px hairlines + whitespace instead of boxes/shadows — while keeping the data
-   density and semantic status colors a monitoring tool needs. */
+/* Foundrr — Aqua "Dashboard expression" design system (Tailwind v4)
+   The dashboard runs on Aqua's LIGHT canvas — the same off-white surface as the
+   marketing site. It adopts Aqua's *system* — restraint, single-amber
+   discipline, light-weight humanist headings, JetBrains Mono for every
+   number/id/port, 1px hairlines + whitespace instead of boxes/shadows — while
+   keeping the data density and semantic status colors a monitoring tool needs.
+
+   Light AA discipline: every text color clears WCAG AA on the surface it sits
+   on. Amber stays the single live/primary accent, but amber *text* on white uses
+   the deeper --color-signal-ink so it stays legible; amber fills, the live dot,
+   and the active-card edge keep the bright --color-signal. The interactive teal,
+   success green, and alert red are tuned to readable-on-white tones.
+
+   The ONE exception to the light surface is the terminal: xterm keeps its dark
+   "console" inset (Claude Code's TUI is built for a dark bg). Its colors are
+   hard-coded in Terminal.tsx and framed as a dark inset within the light shell. */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap");
 @import "tailwindcss";
 
 /* ── Theme tokens ──────────────────────────────────────────────────────────
-   Aligned to the canonical design-system doc §1. `bg-void`, `text-muted`,
-   `border-line`, etc. resolve as Tailwind v4 utilities. */
+   Light Aqua surface, matched to the marketing site's canvas. `bg-void`,
+   `text-muted`, `border-line`, etc. resolve as Tailwind v4 utilities. Token
+   *names* are kept stable (the components reference them everywhere); only the
+   *values* flip to light-AA. Naming nuance for light mode:
+     --color-void   = the page canvas + recessed insets (lightest grey)
+     --color-panel  = a raised card surface (pure white)
+     --color-line   = the 1px hairline                                        */
 @theme {
-  --color-void: #0d1014;
-  --color-panel: #151b23;
-  --color-line: #232c37;
-  --color-text: #e6eaf0;
-  --color-muted: #8a95a3;
-  --color-faint: #5b6573;
+  --color-void: #f6f7f9; /* canvas + recessed insets */
+  --color-panel: #ffffff; /* raised card surface */
+  --color-inset: #eef0f3; /* a touch deeper than canvas for inputs/insets on white */
+  --color-line: #e6e8ec; /* hairline */
+  --color-text: #1b2128; /* ink */
+  --color-muted: #5a6675; /* secondary ink (AA on white + canvas) */
+  --color-faint: #8a94a3; /* tertiary ink (AA-large / captions) */
+
+  /* Amber — the single live/primary accent. --signal is the bright fill used
+     for dots, the active-card edge, the header sweep, tint backgrounds. For
+     amber *text on white* use --signal-ink (≈4.6:1) so it clears AA. */
   --color-signal: #f2a23c;
-  --color-cool: #56b6c2;
-  --color-ok: #74c69d;
-  --color-alert: #e5645a;
+  --color-signal-ink: #a8620a;
+
+  /* Semantic status, retuned for AA on the light surface:
+       cool  = interactive / links / ports (deep teal, ~4.8:1 on white)
+       ok    = success (deep green, ~4.8:1 on white)
+       alert = destructive (deep red, ~5:1 on white)                          */
+  --color-cool: #1f7d8a;
+  --color-ok: #1f7d52;
+  --color-alert: #c4362b;
 
   /* Display / headings: humanist grotesk carried at a LIGHT weight (Aqua's
      signature, shared with the landing page). Data/code/numerics: JetBrains
@@ -61,12 +87,15 @@ body {
     font-feature-settings: "tnum" 1; /* tabular numerals → no layout shift on counts */
   }
 
-  /* Raised panel surface with a single hairline border — never a drop shadow.
-     Aqua separates regions with hairlines + whitespace, not boxes. */
+  /* Raised panel surface: white card lifted off the canvas with a single
+     hairline border + the faintest shadow for separation. Aqua separates
+     regions with hairlines + whitespace, not heavy boxes — the shadow is barely
+     perceptible, just enough to read as "raised" on the light canvas. */
   .panel {
     background-color: var(--color-panel);
     border: 1px solid var(--color-line);
     border-radius: 10px;
+    box-shadow: 0 1px 2px -1px color-mix(in srgb, #1b2128 8%, transparent);
   }
 
   .hairline {
@@ -97,8 +126,8 @@ body {
 
   /* ── Pill buttons (shared vocabulary, doc §3 "Buttons & controls") ───────
      Default ghost: transparent fill, 1px hairline, neutral text; hover lifts
-     the border to --cool. Primary: amber-outlined (one main action per view).
-     Destructive: neutral until hover, then --alert. */
+     the border to --cool + a faint tint. Primary: amber-outlined (one main
+     action per view). Destructive: neutral until hover, then --alert. */
   .pill {
     display: inline-flex;
     align-items: center;
@@ -122,24 +151,26 @@ body {
   .pill:hover:not(:disabled) {
     color: var(--color-text);
     border-color: var(--color-cool);
+    background-color: color-mix(in srgb, var(--color-cool) 6%, transparent);
   }
   .pill:disabled {
     cursor: not-allowed;
-    opacity: 0.4;
+    opacity: 0.45;
   }
 
-  /* Primary — amber-outlined, used sparingly (the one live/primary action). */
+  /* Primary — amber-outlined, used sparingly (the one live/primary action).
+     Text uses the deeper amber-ink so the label stays AA on white. */
   .pill-primary {
-    color: var(--color-signal);
-    border-color: color-mix(in srgb, var(--color-signal) 55%, transparent);
+    color: var(--color-signal-ink);
+    border-color: color-mix(in srgb, var(--color-signal) 70%, transparent);
   }
   .pill-primary:hover:not(:disabled) {
-    color: var(--color-signal);
+    color: var(--color-signal-ink);
     border-color: var(--color-signal);
-    background-color: color-mix(in srgb, var(--color-signal) 10%, transparent);
+    background-color: color-mix(in srgb, var(--color-signal) 14%, transparent);
   }
 
-  /* Cool — interactive / links / ports affordance. */
+  /* Cool — interactive / links / ports affordance (deep teal text). */
   .pill-cool {
     color: var(--color-cool);
   }
@@ -156,16 +187,19 @@ body {
   .pill-danger:hover:not(:disabled) {
     color: var(--color-alert);
     border-color: var(--color-alert);
-    background-color: color-mix(in srgb, var(--color-alert) 10%, transparent);
+    background-color: color-mix(in srgb, var(--color-alert) 9%, transparent);
   }
 
-  /* Active agent card: a thin amber left edge + a subtle glow. Amber appears
-     only when the machine is actually working — idle cards stay fully neutral. */
+  /* Active agent card: a thin amber left edge + a faint amber tint. Amber
+     appears only when the machine is actually working — idle cards stay fully
+     neutral white. On the light canvas the tint reads as a warm wash, not a
+     glow. */
   .card-active {
     border-left: 2px solid var(--color-signal);
+    background-color: color-mix(in srgb, var(--color-signal) 5%, var(--color-panel));
     box-shadow:
-      inset 2px 0 0 -1px color-mix(in srgb, var(--color-signal) 55%, transparent),
-      0 0 18px -10px color-mix(in srgb, var(--color-signal) 50%, transparent);
+      inset 2px 0 0 -1px color-mix(in srgb, var(--color-signal) 60%, transparent),
+      0 1px 2px -1px color-mix(in srgb, #1b2128 8%, transparent);
   }
 }
 
@@ -176,12 +210,12 @@ body {
   @keyframes mc-pulse {
     0%,
     100% {
-      opacity: 0.95;
-      box-shadow: 0 0 3px 0 color-mix(in srgb, var(--color-signal) 45%, transparent);
+      opacity: 1;
+      box-shadow: 0 0 3px 0 color-mix(in srgb, var(--color-signal) 50%, transparent);
     }
     50% {
-      opacity: 0.7;
-      box-shadow: 0 0 7px 2px color-mix(in srgb, var(--color-signal) 28%, transparent);
+      opacity: 0.78;
+      box-shadow: 0 0 7px 2px color-mix(in srgb, var(--color-signal) 30%, transparent);
     }
   }
 
@@ -206,7 +240,7 @@ body {
 /* Reduced-motion fallbacks: a steady glow, no movement. */
 @media (prefers-reduced-motion: reduce) {
   .pulse-dot {
-    box-shadow: 0 0 6px 1px color-mix(in srgb, var(--color-signal) 40%, transparent);
+    box-shadow: 0 0 6px 1px color-mix(in srgb, var(--color-signal) 45%, transparent);
   }
   .sweep-line {
     opacity: 0.5;

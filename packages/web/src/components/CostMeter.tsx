@@ -51,7 +51,7 @@ export function CostMeter({ cost }: CostMeterProps) {
     >
       <span
         className="mono text-sm font-semibold tabular-nums"
-        style={{ color: "var(--color-signal)" }}
+        style={{ color: "var(--color-signal-ink)" }}
       >
         {usd(cost.todayUsd)}
       </span>

@@ -13,7 +13,7 @@ import { runTelemetry } from "./telemetry.js";
 import { runTunnel } from "./tunnel.js";
 import { err } from "./util.js";
 
-const USAGE = `mc — Mission Control daemon + CLI
+const USAGE = `mc — Foundrr daemon + CLI
 
 Usage:
   mc setup              Guided first-run: token + hooks + URL + next steps (safe to re-run)
@@ -23,7 +23,7 @@ Usage:
   mc telemetry enable [--write]  Print the OTel env block (--write also adds it to ~/.claude/settings.json)
   mc telemetry share on|off|status  Anonymous global usage sharing (ON by default; easy opt-out)
   mc config model <key>|show  Set/show the agent/model you run (used for the global leaderboard)
-  mc telegram link      Get a code to link this install to the Founder shared bot
+  mc telegram link      Get a code to link this install to the Foundrr shared bot
   mc telegram status    Show the Telegram mode, install id, and linked state
   mc telegram mode <m>  Set the leash mode: shared (default) | own | off
   mc telegram setup <t> Store a Telegram bot token for "own" mode (your own bot)

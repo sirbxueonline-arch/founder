@@ -121,7 +121,7 @@ export async function runStart(): Promise<void> {
   const daemon = await startDaemon(config);
 
   const banner = box([
-    color.bold("Mission Control"),
+    color.bold("Foundrr"),
     "",
     `Dashboard: ${color.cyan(daemon.url)}`,
     color.dim("Press Ctrl+C to stop."),

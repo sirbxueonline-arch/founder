@@ -34,7 +34,7 @@ function resolvedHost(): string {
 }
 
 export function runRotateToken(): void {
-  process.stdout.write(`\n${color.bold("Mission Control — rotate-token")}\n\n`);
+  process.stdout.write(`\n${color.bold("Foundrr — rotate-token")}\n\n`);
 
   const home = resolveHome();
   let token: string;

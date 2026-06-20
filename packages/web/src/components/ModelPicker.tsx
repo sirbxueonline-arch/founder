@@ -1,7 +1,7 @@
 /**
  * ModelPicker — a compact "pick your AI model" control that lives in the Header.
  * The chosen model tags telemetry and the global leaderboard bucket, AND drives
- * which agent the Founder terminal launches — so it is the user's identity on
+ * which agent the Foundrr terminal launches — so it is the user's identity on
  * the board and the terminal's launch target.
  *
  * Controlled by App: it receives the selected `model` key (lifted so the Header
@@ -11,8 +11,8 @@
  * POSTs to /api/config/model; on failure it reverts and shows an inline error.
  *
  * A real native <select> is used deliberately — it is the most robust,
- * keyboard-accessible, and mobile-friendly option, styled to the telemetry
- * console theme (dark, mono, hairline border).
+ * keyboard-accessible, and mobile-friendly option, styled to the Aqua light
+ * surface (mono, hairline border, amber accent dot).
  */
 import { useState } from "react";
 

@@ -25,7 +25,7 @@ export function FinalCta() {
             rel="noopener noreferrer"
             className="pill-signal mt-10 inline-flex items-center justify-center rounded-full bg-signal px-6 py-3 text-sm font-medium text-[#1b1206]"
           >
-            Get Founder
+            Get Foundrr
           </a>
 
           <div className="mt-8 inline-flex items-center gap-3 rounded-lg border border-hairline bg-canvas-raised px-4 py-2.5">

@@ -19,10 +19,10 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://foundrr.online"),
-  title: "Founder — supervise your AI coding agents from anywhere",
+  title: "Foundrr — supervise your AI coding agents from anywhere",
   description:
     "Supervise your AI coding agents from anywhere — and watch the world's token spend in real time. Open-source, self-hosted dev supervision.",
-  applicationName: "Founder",
+  applicationName: "Foundrr",
   keywords: [
     "AI coding agents",
     "Claude Code",
@@ -33,16 +33,16 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Founder — supervise your AI coding agents from anywhere",
+    title: "Foundrr — supervise your AI coding agents from anywhere",
     description:
       "Supervise your AI coding agents from anywhere — and watch the world's token spend in real time.",
     type: "website",
     url: "https://foundrr.online",
-    siteName: "Founder",
+    siteName: "Foundrr",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Founder",
+    title: "Foundrr",
     description:
       "Supervise your AI coding agents from anywhere — and watch the world's token spend in real time.",
   },

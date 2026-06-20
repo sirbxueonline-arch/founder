@@ -50,7 +50,7 @@ function TextField({ id, label, placeholder, value, mono, onChange }: TextFieldP
         onChange={(e) => onChange(e.target.value)}
         className={`${mono ? "mono " : ""}rounded-md px-2 py-1.5 text-xs outline-none`}
         style={{
-          backgroundColor: "var(--color-void)",
+          backgroundColor: "var(--color-inset)",
           color: "var(--color-text)",
           border: "1px solid var(--color-line)",
         }}

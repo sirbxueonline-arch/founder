@@ -57,7 +57,7 @@ const AGENTS: readonly Agent[] = [
     name: "Gemini CLI",
     vendor: "Google",
     color: "#4285f4",
-    blurb: "Google's open-source terminal agent. Runs alongside Founder.",
+    blurb: "Google's open-source terminal agent. Runs alongside Foundrr.",
     tags: ["npm global", "Best-effort metering"],
     command: "npm install -g @google/gemini-cli",
     link: { href: GEMINI_CLI_URL, label: "github.com/google-gemini/gemini-cli" },

@@ -109,7 +109,7 @@ export function DiffView({ diff, truncated }: DiffViewProps) {
       </pre>
 
       {truncated ? (
-        <p className="caption" style={{ color: "var(--color-signal)" }}>
+        <p className="caption" style={{ color: "var(--color-signal-ink)" }}>
           Diff truncated — open the file locally to see the rest.
         </p>
       ) : null}

@@ -72,7 +72,7 @@ export function Hero() {
           {...lineUp(0.42)}
           className="mt-9 max-w-xl text-base leading-relaxed text-ink-muted sm:text-lg"
         >
-          Founder is a local command center for your terminal agents. Watch every
+          Foundrr is a local command center for your terminal agents. Watch every
           session live, and approve what they ask — from anywhere.
         </motion.p>
 

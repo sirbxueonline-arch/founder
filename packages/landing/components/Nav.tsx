@@ -5,13 +5,13 @@ import { GITHUB_URL } from "@/lib/config";
 /** Diamond ◆ wordmark used across the site. Root-relative so it works on /setup too. */
 function Wordmark() {
   return (
-    <Link href="/" className="flex items-center gap-2.5" aria-label="Founder home">
+    <Link href="/" className="flex items-center gap-2.5" aria-label="Foundrr home">
       <span
         className="inline-block h-2 w-2 rotate-45 bg-ink"
         aria-hidden
       />
       <span className="text-[0.95rem] font-medium tracking-tight text-ink">
-        Founder
+        Foundrr
       </span>
     </Link>
   );
@@ -59,7 +59,7 @@ export function Nav() {
             rel="noopener noreferrer"
             className="pill-signal inline-flex items-center justify-center rounded-full bg-signal px-4 py-1.5 text-sm font-medium text-[#1b1206]"
           >
-            Get Founder
+            Get Foundrr
           </a>
         </div>
       </nav>

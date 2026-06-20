@@ -60,7 +60,7 @@ export function ClaimSection() {
               <div className="border-b border-hairline p-7 sm:border-b-0 sm:p-9">
                 <div className="flex items-baseline justify-between">
                   <p className="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-ink-faint">
-                    Without Founder
+                    Without Foundrr
                   </p>
                   <p className="font-mono text-[0.66rem] tracking-[0.04em] text-ink-faint">
                     blocked
@@ -86,7 +86,7 @@ export function ClaimSection() {
               <div className="p-7 sm:p-9">
                 <div className="flex items-baseline justify-between">
                   <p className="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-ink">
-                    With Founder
+                    With Foundrr
                   </p>
                   <p className="inline-flex items-center gap-1.5 font-mono text-[0.66rem] tracking-[0.04em] text-ink">
                     <span

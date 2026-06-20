@@ -48,7 +48,8 @@ function chipStyle(status: string): { label: string; color: string } {
     case "D":
       return { label: status, color: "var(--color-alert)" };
     case "M":
-      return { label: status, color: "var(--color-signal)" };
+      // Amber-ink so the "modified" chip label stays AA on its amber tint.
+      return { label: status, color: "var(--color-signal-ink)" };
     case "R":
       return { label: status, color: "var(--color-cool)" };
     default:

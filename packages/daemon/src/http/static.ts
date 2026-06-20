@@ -15,24 +15,24 @@ import type { AppContext } from "./context.js";
 import { extractToken, isValidToken } from "./auth.js";
 
 const TOKEN_PROMPT_HTML = `<!doctype html><html><head><meta charset="utf-8">
-<title>Mission Control</title>
+<title>Foundrr</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>body{font-family:system-ui,sans-serif;background:#0d1014;color:#e6eaf0;
 display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
 .card{max-width:32rem;padding:2rem;text-align:center;line-height:1.6}
 code{color:#f2a23c}</style></head>
-<body><div class="card"><h1>Mission Control</h1>
+<body><div class="card"><h1>Foundrr</h1>
 <p>Append <code>?token=YOUR_TOKEN</code> to the URL.</p>
 <p>See the daemon startup log for your token.</p></div></body></html>`;
 
 const PLACEHOLDER_HTML = `<!doctype html><html><head><meta charset="utf-8">
-<title>Mission Control</title>
+<title>Foundrr</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>body{font-family:system-ui,sans-serif;background:#0d1014;color:#e6eaf0;
 display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
 .card{max-width:32rem;padding:2rem;text-align:center;line-height:1.6}
 code{color:#f2a23c}</style></head>
-<body><div class="card"><h1>Mission Control</h1>
+<body><div class="card"><h1>Foundrr</h1>
 <p>The daemon is running, but the web build was not found.</p>
 <p>Build the web app: <code>npm run build -w @mission-control/web</code></p></div></body></html>`;
 

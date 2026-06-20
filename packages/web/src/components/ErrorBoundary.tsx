@@ -7,7 +7,7 @@
  * telemetry-console-styled fallback instead.
  *
  * Two ways it's used in App.tsx:
- *   - Top-level <ErrorBoundary label="Founder"> wraps the entire app, so the
+ *   - Top-level <ErrorBoundary label="Foundrr"> wraps the entire app, so the
  *     worst case is the user sees the error + a Reload button — never a blank
  *     page.
  *   - <ErrorBoundary label="Terminal"> wraps just the terminal panel, so an
@@ -20,7 +20,7 @@ import { Component, type ErrorInfo, type ReactNode } from "react";
 
 interface ErrorBoundaryProps {
   children: ReactNode;
-  /** Short context label shown in the fallback header, e.g. "Founder" / "Terminal". */
+  /** Short context label shown in the fallback header, e.g. "Foundrr" / "Terminal". */
   label?: string;
   /** When provided, renders a "Try again" button that resets boundary state. */
   onReset?: () => void;
@@ -121,7 +121,7 @@ export class ErrorBoundary extends Component<
               <pre
                 className="mono mt-2 max-h-48 overflow-auto whitespace-pre-wrap break-words rounded-md p-2 text-[0.6875rem] leading-relaxed"
                 style={{
-                  backgroundColor: "var(--color-void)",
+                  backgroundColor: "var(--color-inset)",
                   border: "1px solid var(--color-line)",
                   color: "var(--color-muted)",
                 }}
@@ -151,7 +151,9 @@ export class ErrorBoundary extends Component<
               onClick={this.handleReload}
               className="mono rounded-md px-4 py-2.5 text-xs tracking-wide transition-colors"
               style={{
-                color: "var(--color-void)",
+                // Dark ink on the amber fill — AA on light mode (light text on
+                // amber would fail).
+                color: "var(--color-text)",
                 backgroundColor: "var(--color-signal)",
                 border: "1px solid var(--color-signal)",
               }}

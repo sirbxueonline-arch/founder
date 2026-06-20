@@ -65,10 +65,12 @@ export function ApprovalBanner({ approvals }: ApprovalBannerProps) {
       aria-live="assertive"
       className="sticky top-0 z-50 w-full border-b"
       style={{
-        backgroundColor: "var(--color-panel)",
+        // A faint amber wash over the white bar so the gate reads as a warm
+        // warning strip on the light canvas, not just another white surface.
+        backgroundColor: "color-mix(in srgb, var(--color-signal) 7%, var(--color-panel))",
         borderColor: "var(--color-signal)",
-        // A second hairline of amber along the very top edge — reads as a
-        // warning strip even at a glance.
+        // A solid amber edge along the very top — reads as a warning strip even
+        // at a glance.
         boxShadow: "inset 0 3px 0 0 var(--color-signal)",
       }}
     >
@@ -81,7 +83,7 @@ export function ApprovalBanner({ approvals }: ApprovalBannerProps) {
           />
           <span
             className="mono text-[0.625rem] font-semibold uppercase tracking-[0.16em]"
-            style={{ color: "var(--color-signal)" }}
+            style={{ color: "var(--color-signal-ink)" }}
           >
             {pending.length === 1
               ? "Approval required"
@@ -158,8 +160,8 @@ function ApprovalRow({ approval, onResolved }: ApprovalRowProps) {
             tabIndex={0}
             className="mono block max-w-full truncate rounded px-2 py-1 text-xs"
             style={{
-              color: "var(--color-muted)",
-              backgroundColor: "var(--color-panel)",
+              color: "var(--color-text)",
+              backgroundColor: "var(--color-inset)",
               border: "1px solid var(--color-line)",
             }}
           >

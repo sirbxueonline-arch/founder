@@ -65,7 +65,7 @@ function KeyButton({ k, onPress }: { k: SpecialKey; onPress: (bytes: string) => 
       style={{
         color: "var(--color-text)",
         border: "1px solid var(--color-line)",
-        backgroundColor: "var(--color-panel)",
+        backgroundColor: "var(--color-inset)",
       }}
     >
       {k.label}
@@ -133,7 +133,7 @@ export function TerminalInputBar({ target }: TerminalInputBarProps) {
           style={{
             color: "var(--color-text)",
             border: "1px solid var(--color-line)",
-            backgroundColor: "var(--color-void)",
+            backgroundColor: "var(--color-inset)",
           }}
         />
         <button
@@ -141,9 +141,9 @@ export function TerminalInputBar({ target }: TerminalInputBarProps) {
           disabled={disabled}
           className="mono h-9 shrink-0 rounded-md px-3 text-xs font-medium tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:opacity-40 sm:h-10"
           style={{
-            color: "var(--color-signal)",
-            border: "1px solid var(--color-signal)",
-            backgroundColor: "color-mix(in srgb, var(--color-signal) 10%, transparent)",
+            color: "var(--color-signal-ink)",
+            border: "1px solid color-mix(in srgb, var(--color-signal) 70%, transparent)",
+            backgroundColor: "color-mix(in srgb, var(--color-signal) 14%, transparent)",
           }}
         >
           Send

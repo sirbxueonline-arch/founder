@@ -19,7 +19,7 @@ export function Footer() {
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2.5">
               <span className="inline-block h-2 w-2 rotate-45 bg-ink" aria-hidden />
-              <p className="text-base font-medium text-ink">Founder</p>
+              <p className="text-base font-medium text-ink">Foundrr</p>
             </div>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-ink-muted">
               Supervise your AI coding agents from anywhere. Open-source,
@@ -83,7 +83,7 @@ export function Footer() {
         <div className="mt-14 flex flex-col items-start justify-between gap-2 border-t border-hairline pt-6 sm:flex-row sm:items-center">
           <p className="font-mono text-xs text-ink-faint">{host}</p>
           <p className="font-mono text-xs text-ink-faint">
-            © {year} Founder · MIT Licensed
+            © {year} Foundrr · MIT Licensed
           </p>
         </div>
       </div>

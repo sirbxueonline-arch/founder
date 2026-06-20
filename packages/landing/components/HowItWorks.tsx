@@ -10,7 +10,7 @@ const STEPS: ReadonlyArray<{ n: string; title: string; body: string }> = [
   {
     n: "02",
     title: "Point it at your agent",
-    body: "Hook up Claude Code or any top coding agent. Founder watches sessions, files edited, commands run, and token spend.",
+    body: "Hook up Claude Code or any top coding agent. Foundrr watches sessions, files edited, commands run, and token spend.",
   },
   {
     n: "03",

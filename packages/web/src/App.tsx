@@ -1,5 +1,5 @@
 /**
- * App — the Mission Control dashboard shell.
+ * App — the Foundrr dashboard shell.
  *
  * Token gate first: without a token, no data calls are made and a full-screen
  * "token required" notice is shown.
@@ -46,10 +46,10 @@ function TokenRequired() {
           className="flex items-center justify-center gap-2 text-xl font-light tracking-tight"
           style={{ color: "var(--color-text)" }}
         >
-          <span aria-hidden="true" style={{ color: "var(--color-signal)" }}>
+          <span aria-hidden="true" style={{ color: "var(--color-signal-ink)" }}>
             ◆
           </span>
-          Founder
+          Foundrr
         </h1>
         <p className="mt-4 text-sm font-light leading-relaxed" style={{ color: "var(--color-muted)" }}>
           An access token is required.
@@ -67,7 +67,7 @@ export function App() {
   // Top-level boundary: nothing below this can ever produce a blank page.
   // Worst case the user sees a readable error + a Reload button.
   return (
-    <ErrorBoundary label="Founder">
+    <ErrorBoundary label="Foundrr">
       <AppShell />
     </ErrorBoundary>
   );
@@ -203,8 +203,8 @@ function Dashboard({ surface, onSurfaceChange }: DashboardProps) {
                   <span
                     className="inline-flex min-w-[1.1rem] items-center justify-center rounded-full px-1 text-[0.625rem] tabular-nums"
                     style={{
-                      color: "var(--color-signal)",
-                      backgroundColor: "color-mix(in srgb, var(--color-signal) 15%, transparent)",
+                      color: "var(--color-signal-ink)",
+                      backgroundColor: "color-mix(in srgb, var(--color-signal) 18%, transparent)",
                     }}
                   >
                     {activeCount}
@@ -243,7 +243,7 @@ function Dashboard({ surface, onSurfaceChange }: DashboardProps) {
               {activeCount > 0 ? (
                 <span
                   className="mono text-[0.625rem] tabular-nums"
-                  style={{ color: "var(--color-signal)" }}
+                  style={{ color: "var(--color-signal-ink)" }}
                 >
                   {activeCount} active
                 </span>
