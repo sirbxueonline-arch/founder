@@ -5,11 +5,12 @@ import { useCountUp } from "@/lib/useCountUp";
 import { formatInt, formatUsd } from "@/lib/format";
 
 /**
- * Big live telemetry numerals — dark canvas, modeled on Aqua's "Results you
- * notice immediately" stat band. Each oversized JetBrains Mono number sits over
- * a full-width hairline rule, with a tiny caption pushed to the right end of
- * that rule (number left, caption right, on the underline row) — exactly Aqua's
- * treatment. Data is real: it reads live global_totals through useLiveData.
+ * Big live telemetry numerals — light canvas, modeled on Aqua's "Results you
+ * notice immediately" stat band. Each oversized JetBrains Mono number is ink on
+ * off-white and sits over a full-width hairline rule, with a tiny caption pushed
+ * to the right end of that rule (number left, caption right, on the underline
+ * row) — exactly Aqua's treatment. Data is real: it reads live global_totals
+ * through useLiveData.
  */
 function LiveStat({
   value,
@@ -27,15 +28,15 @@ function LiveStat({
   return (
     <div className="flex flex-col">
       <span
-        className="font-mono text-[clamp(2.25rem,9vw,5rem)] font-light leading-none tracking-[-0.03em] tabular-nums text-text"
+        className="font-mono text-[clamp(2.25rem,9vw,5rem)] font-light leading-none tracking-[-0.03em] tabular-nums text-ink"
         aria-label={ariaLabel}
       >
         {value}
       </span>
       {/* Full-width hairline rule; caption left, short note pushed right —
           Aqua's exact stat-row treatment ("6h 23m" … "Saved coding weekly"). */}
-      <div className="mt-6 flex items-baseline justify-between gap-4 border-t border-line pt-3">
-        <span className="inline-flex items-center gap-2 font-mono text-[0.66rem] uppercase tracking-[0.18em] text-faint">
+      <div className="mt-6 flex items-baseline justify-between gap-4 border-t border-hairline pt-3">
+        <span className="inline-flex items-center gap-2 font-mono text-[0.66rem] uppercase tracking-[0.18em] text-ink-faint">
           {live && (
             <span className="relative inline-flex h-1.5 w-1.5">
               <span className="pulse-dot absolute inset-0" aria-hidden />
@@ -44,7 +45,7 @@ function LiveStat({
           )}
           {caption}
         </span>
-        <span className="shrink-0 text-right text-[0.78rem] text-muted">
+        <span className="shrink-0 text-right text-[0.78rem] text-ink-muted">
           {note}
         </span>
       </div>

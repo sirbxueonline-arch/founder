@@ -30,7 +30,7 @@ function buildRows(live: LeaderboardRow[]): LeaderboardRow[] {
 }
 
 /**
- * Restyled minimal leaderboard — hairline rows on the dark canvas, mono
+ * Restyled minimal leaderboard — hairline rows on the light canvas, mono
  * numbers, the #1 agent subtly amber. Data is real: it reads the live
  * model_leaderboard via useLiveData. No share bars, no shadows — just rows.
  */
@@ -41,36 +41,36 @@ function Row({ row, rank }: { row: LeaderboardRow; rank: number }) {
   const Logo = logoForKey(row.agent);
 
   return (
-    <li className="row-hover -mx-3 flex items-center gap-4 rounded-lg border-t border-line px-3 py-3.5">
+    <li className="row-hover -mx-3 flex items-center gap-4 rounded-lg border-t border-hairline px-3 py-3.5">
       <span
         className={`w-6 shrink-0 font-mono text-sm tabular-nums ${
-          isLeader ? "text-signal" : "text-faint"
+          isLeader ? "text-signal-ink" : "text-ink-faint"
         }`}
       >
         {rank.toString().padStart(2, "0")}
       </span>
       <span
-        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-line bg-void-2"
+        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-hairline bg-canvas-raised"
         aria-hidden
       >
-        <Logo size={17} />
+        <Logo size={17} surface="light" />
       </span>
       <div className="min-w-0 flex-1">
         <span
           className={`truncate text-sm ${
-            isLeader ? "text-signal signal-glow-soft" : "text-text"
+            isLeader ? "font-medium text-signal-ink" : "text-ink"
           }`}
         >
           {model.name}
         </span>
-        <span className="ml-2 text-xs text-faint">{model.vendor}</span>
+        <span className="ml-2 text-xs text-ink-muted">{model.vendor}</span>
       </div>
-      <span className="hidden w-24 shrink-0 text-right font-mono text-xs text-muted tabular-nums sm:block">
+      <span className="hidden w-24 shrink-0 text-right font-mono text-xs text-ink-muted tabular-nums sm:block">
         {hasData ? formatUsd(row.total_cost_usd) : "—"}
       </span>
       <span
         className={`w-20 shrink-0 text-right font-mono text-sm tabular-nums ${
-          isLeader ? "text-signal" : "text-text"
+          isLeader ? "text-signal-ink" : "text-ink"
         }`}
       >
         {hasData ? formatCompact(row.total_tokens) : "—"}
@@ -98,10 +98,10 @@ export function Leaderboard({ initial }: { initial: LiveData }) {
   return (
     <div>
       <div className="flex items-baseline justify-between">
-        <p className="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-faint">
+        <p className="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-ink-faint">
           Model leaderboard
         </p>
-        <span className="inline-flex items-center gap-1.5 font-mono text-[0.66rem] text-faint">
+        <span className="inline-flex items-center gap-1.5 font-mono text-[0.66rem] text-ink-faint">
           <span className="relative inline-flex h-1.5 w-1.5">
             <span className="pulse-dot absolute inset-0" aria-hidden />
             <span className="relative inline-block h-1.5 w-1.5 rounded-full bg-signal" />
@@ -115,7 +115,7 @@ export function Leaderboard({ initial }: { initial: LiveData }) {
         ))}
       </ol>
       {!hasAny && (
-        <p className="mt-6 text-center text-sm text-muted">
+        <p className="mt-6 text-center text-sm text-ink-muted">
           No agents reporting yet — the leaderboard fills in as installs come
           online.
         </p>

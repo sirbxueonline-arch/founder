@@ -32,6 +32,11 @@
           by the /setup page (telemetry / status), never the home. ---- */
   --signal: #f2a23c;
   --signal-bright: #ffb84d;
+  /* Darker amber for amber *text* on the light canvas — the bright fill amber
+     only clears ~2:1 on white, so amber links / leader labels / mono accents
+     use this deeper tone (≈4.6:1 on white) to stay AA. Fills, glows, and the
+     live dots keep using --signal. */
+  --signal-ink: #a8620a;
   --cool: #56b6c2;
   --ok: #74c69d;
   --alert: #e5645a;
@@ -57,6 +62,7 @@
 
   --color-signal: var(--signal);
   --color-signal-bright: var(--signal-bright);
+  --color-signal-ink: var(--signal-ink);
   --color-cool: var(--cool);
   --color-ok: var(--ok);
   --color-alert: var(--alert);
@@ -661,14 +667,15 @@ body {
     0 10px 30px -10px color-mix(in srgb, var(--signal) 55%, transparent);
 }
 
-/* Leaderboard row: a quiet hairline-brighten + inset tint on hover. */
+/* Leaderboard row: a quiet hairline-brighten + inset tint on hover. The
+   leaderboard now lives on the light canvas, so the hover tint is ink-based. */
 .row-hover {
   transition:
     background-color 0.2s ease,
     border-color 0.2s ease;
 }
 .row-hover:hover {
-  background-color: color-mix(in srgb, var(--text) 4%, transparent);
+  background-color: color-mix(in srgb, var(--ink) 4%, transparent);
 }
 
 /* Hero per-line mask reveal — a soft clip+rise used for the headline.
