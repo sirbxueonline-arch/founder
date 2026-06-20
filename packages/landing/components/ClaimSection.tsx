@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/Reveal";
+import { MeshWhisper } from "@/components/Ambient";
 
 const WITHOUT: ReadonlyArray<string> = [
   "An agent stalls on a permission prompt",
@@ -29,8 +30,9 @@ function Dot({ tone }: { tone: "muted" | "signal" }) {
  */
 export function ClaimSection() {
   return (
-    <section className="border-t border-hairline bg-canvas">
-      <div className="mx-auto max-w-4xl px-5 py-24 sm:py-32">
+    <section className="relative overflow-hidden border-t border-hairline bg-canvas">
+      <MeshWhisper />
+      <div className="relative mx-auto max-w-4xl px-5 py-24 sm:py-32">
         <Reveal className="flex flex-col items-center text-center">
           <span className="inline-flex items-center rounded-full border border-hairline bg-canvas-raised px-3 py-1 font-mono text-[0.66rem] uppercase tracking-[0.18em] text-ink-muted">
             One screen
@@ -43,7 +45,7 @@ export function ClaimSection() {
         <div className="mt-14 grid gap-4 sm:grid-cols-2">
           <Reveal
             delay={0.05}
-            className="rounded-2xl border border-hairline bg-canvas-raised p-7"
+            className="lift-light rounded-2xl border border-hairline bg-canvas-raised p-7"
           >
             <p className="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-ink-faint">
               Without Founder
@@ -63,7 +65,7 @@ export function ClaimSection() {
 
           <Reveal
             delay={0.12}
-            className="rounded-2xl border border-ink/15 bg-canvas-raised p-7"
+            className="lift-light rounded-2xl border border-ink/15 bg-canvas-raised p-7"
           >
             <p className="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-ink">
               With Founder

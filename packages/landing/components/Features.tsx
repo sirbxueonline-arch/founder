@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/Reveal";
+import { MeshWhisper } from "@/components/Ambient";
 import type { ReactNode } from "react";
 
 const STROKE = {
@@ -67,16 +68,19 @@ const FEATURES: ReadonlyArray<Feature> = [
  */
 export function Features() {
   return (
-    <section id="features" className="border-t border-hairline bg-canvas">
-      <div className="mx-auto max-w-5xl px-5 py-24 sm:py-32">
+    <section id="features" className="relative overflow-hidden border-t border-hairline bg-canvas">
+      <MeshWhisper />
+      <div className="relative mx-auto max-w-5xl px-5 py-24 sm:py-32">
         <div className="grid gap-px overflow-hidden rounded-2xl border border-hairline bg-hairline sm:grid-cols-3">
           {FEATURES.map((feature, i) => (
             <Reveal
               key={feature.label}
               delay={i * 0.08}
-              className="flex flex-col bg-canvas p-8 sm:p-10"
+              className="group flex flex-col bg-canvas p-8 transition-colors duration-300 hover:bg-canvas-raised sm:p-10"
             >
-              <span className="text-ink">{feature.icon}</span>
+              <span className="text-ink transition-transform duration-300 motion-safe:group-hover:-translate-y-0.5">
+                {feature.icon}
+              </span>
               <h3 className="mt-6 text-lg font-medium text-ink">
                 {feature.label}
               </h3>

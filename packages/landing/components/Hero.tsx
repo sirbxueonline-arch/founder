@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { AuroraField } from "@/components/Ambient";
 
 function ArrowRight() {
   return (
@@ -36,17 +37,19 @@ export function Hero() {
     transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const, delay },
   });
 
+  // Per-line mask reveal for the headline: each line rises out of an
+  // overflow-clip mask. Under reduced motion the rise is frozen (line is
+  // shown in place) by the CSS reduced-motion block.
+  const lineDelay = (delay: number) =>
+    reduce ? undefined : ({ animationDelay: `${delay}s` } as const);
+
   return (
     <section
       id="top"
       className="relative overflow-hidden bg-canvas"
     >
-      {/* Ambient blob field — the only texture, extremely low contrast. */}
-      <div className="blob-field" aria-hidden>
-        <span className="blob blob-a" />
-        <span className="blob blob-b" />
-        <span className="blob blob-c" />
-      </div>
+      {/* Aurora / mesh field + grain + vignette — the hero centerpiece. */}
+      <AuroraField />
 
       <div className="relative mx-auto max-w-4xl px-5 pt-28 pb-24 sm:pt-36 sm:pb-32 text-center">
         <motion.p
@@ -57,23 +60,27 @@ export function Hero() {
         </motion.p>
 
         <h1 className="mt-7 font-display text-[2.6rem] leading-[1.05] tracking-[-0.02em] text-ink sm:text-[4.5rem] sm:leading-[1.02]">
-          <motion.span {...lineUp(0.06)} className="block font-light">
-            You left the desk.
-          </motion.span>
-          <motion.span {...lineUp(0.14)} className="block font-light">
-            Your agents kept working.
-          </motion.span>
+          <span className="line-mask">
+            <span className="line-rise font-light" style={lineDelay(0.18)}>
+              You left the desk.
+            </span>
+          </span>
+          <span className="line-mask">
+            <span className="line-rise font-light" style={lineDelay(0.3)}>
+              Your agents kept working.
+            </span>
+          </span>
         </h1>
 
         <motion.p
-          {...lineUp(0.24)}
+          {...lineUp(0.5)}
           className="mx-auto mt-8 max-w-xl text-base leading-relaxed text-ink-muted sm:text-lg"
         >
           Founder is a local command center for your terminal agents. Watch every
           session live, and approve what they ask — from anywhere.
         </motion.p>
 
-        <motion.div {...lineUp(0.32)} className="mt-9">
+        <motion.div {...lineUp(0.6)} className="mt-9">
           <a
             href="#how-it-works"
             className="group inline-flex items-center gap-2 text-sm font-medium text-ink underline-offset-4 hover:underline"

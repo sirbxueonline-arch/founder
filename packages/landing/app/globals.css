@@ -83,8 +83,11 @@ body {
 }
 
 /* ============================================================
-   Hero ambient blob field — extremely low-contrast, no busy
-   gradients. The ONLY ambient texture on the page.
+   Aurora / gradient-mesh blob field — a slowly-drifting field of
+   large blurred radial gradients in cool greys + the faintest amber.
+   Extremely low contrast: it must feel alive but never compete with
+   text. Used full-bleed behind the hero (and a 2-blob variant on
+   /setup). Drift is killed under prefers-reduced-motion.
    ============================================================ */
 .blob-field {
   position: absolute;
@@ -95,41 +98,244 @@ body {
 .blob {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(60px);
-  opacity: 0.5;
+  filter: blur(64px);
+  opacity: 0.55;
+  will-change: transform;
+  transform: translateZ(0);
 }
 .blob-a {
-  width: 42vw;
-  height: 42vw;
-  left: -8vw;
-  top: -6vw;
+  width: 46vw;
+  height: 46vw;
+  left: -10vw;
+  top: -8vw;
   background: radial-gradient(
     circle at 50% 50%,
-    color-mix(in srgb, var(--ink) 4%, transparent),
+    color-mix(in srgb, var(--ink) 5%, transparent),
     transparent 70%
   );
+  animation: drift-a 26s ease-in-out infinite;
 }
 .blob-b {
-  width: 38vw;
-  height: 38vw;
-  right: -6vw;
-  top: 4vw;
+  width: 40vw;
+  height: 40vw;
+  right: -8vw;
+  top: 2vw;
   background: radial-gradient(
     circle at 50% 50%,
-    color-mix(in srgb, var(--ink) 3%, transparent),
+    color-mix(in srgb, #6f7d8f 6%, transparent),
     transparent 70%
   );
+  animation: drift-b 30s ease-in-out infinite;
 }
 .blob-c {
-  width: 30vw;
-  height: 30vw;
-  left: 30vw;
-  bottom: -10vw;
+  width: 34vw;
+  height: 34vw;
+  left: 32vw;
+  bottom: -12vw;
   background: radial-gradient(
     circle at 50% 50%,
-    color-mix(in srgb, var(--signal) 5%, transparent),
+    color-mix(in srgb, var(--signal) 6%, transparent),
     transparent 70%
   );
+  animation: drift-c 34s ease-in-out infinite;
+}
+/* A fourth, cooler accent that breathes opacity to keep the field
+   from reading as static. Only present in the hero variant. */
+.blob-d {
+  width: 28vw;
+  height: 28vw;
+  right: 8vw;
+  bottom: -6vw;
+  border-radius: 9999px;
+  filter: blur(64px);
+  opacity: 0.4;
+  will-change: transform, opacity;
+  background: radial-gradient(
+    circle at 50% 50%,
+    color-mix(in srgb, #8a97a8 5%, transparent),
+    transparent 70%
+  );
+  animation: drift-d 24s ease-in-out infinite;
+}
+
+@keyframes drift-a {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(3vw, 2vw, 0) scale(1.06);
+  }
+}
+@keyframes drift-b {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-2.5vw, 2.5vw, 0) scale(1.08);
+  }
+}
+@keyframes drift-c {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate3d(2vw, -2.5vw, 0) scale(1.1);
+    opacity: 0.7;
+  }
+}
+@keyframes drift-d {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translate3d(-2vw, -1.5vw, 0) scale(1.05);
+    opacity: 0.55;
+  }
+}
+
+/* ============================================================
+   Grain / noise overlay — an SVG fractal-noise data URI tiled at
+   very low alpha. Adds the faintest texture so large flat areas
+   never read as dead white/black. Static; no animation.
+   ============================================================ */
+.grain-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  mix-blend-mode: soft-light;
+}
+.grain-light {
+  opacity: 0.04;
+}
+.grain-dark {
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+}
+
+/* Soft vignette to give a section quiet depth at its edges. */
+.vignette-light {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 120% 90% at 50% 40%,
+    transparent 55%,
+    color-mix(in srgb, var(--ink) 4%, transparent) 100%
+  );
+}
+.vignette-dark {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, #000 28%, transparent),
+      transparent 14%,
+      transparent 86%,
+      color-mix(in srgb, #000 32%, transparent)
+    );
+}
+
+/* ============================================================
+   Grid fields for the dark sections — a faint dot-grid or hairline
+   grid that fades out radially so it never reads as a hard mesh.
+   Static; safe under reduced motion.
+   ============================================================ */
+.grid-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.grid-dots {
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--line) 90%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 70% 70% at 50% 45%,
+    black 0%,
+    transparent 75%
+  );
+  mask-image: radial-gradient(
+    ellipse 70% 70% at 50% 45%,
+    black 0%,
+    transparent 75%
+  );
+  opacity: 0.55;
+}
+.grid-lines {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--line) 80%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--line) 80%, transparent) 1px, transparent 1px);
+  background-size: 60px 60px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 75% 65% at 50% 50%,
+    black 0%,
+    transparent 78%
+  );
+  mask-image: radial-gradient(
+    ellipse 75% 65% at 50% 50%,
+    black 0%,
+    transparent 78%
+  );
+  opacity: 0.4;
+}
+
+/* Radial amber bloom behind a focal element (approve card / numbers).
+   Very low alpha, slow breathe. Sits behind content. */
+.radial-bloom {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 9999px;
+  filter: blur(40px);
+  background: radial-gradient(
+    circle at 50% 50%,
+    color-mix(in srgb, var(--signal) 18%, transparent),
+    transparent 70%
+  );
+  opacity: 0.6;
+  will-change: opacity, transform;
+  animation: bloom-breathe 7s ease-in-out infinite;
+}
+@keyframes bloom-breathe {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.08);
+  }
+}
+
+/* A whisper of mesh for light secondary sections — one soft radial
+   tint anchored to a corner so the white never reads as empty. */
+.mesh-whisper {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      40vw 40vw at 12% 0%,
+      color-mix(in srgb, var(--ink) 3%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      36vw 36vw at 92% 100%,
+      color-mix(in srgb, var(--signal) 3%, transparent),
+      transparent 70%
+    );
 }
 
 /* ============================================================
@@ -251,12 +457,88 @@ body {
 
 .card-hover {
   transition:
-    border-color 0.2s ease,
-    transform 0.2s ease,
-    background-color 0.2s ease;
+    border-color 0.25s ease,
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
 }
 .card-hover:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+}
+
+/* ============================================================
+   Refined micro-interactions for the elevated home page.
+   ============================================================ */
+
+/* Light hairline card: lift + the hairline brightens toward ink on
+   hover. Used by the comparison + feature cards on the light canvas. */
+.lift-light {
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+.lift-light:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--ink) 22%, transparent);
+  box-shadow: 0 18px 40px -28px color-mix(in srgb, var(--ink) 55%, transparent);
+}
+
+/* Dark card lift: border brightens, faint signal-tinted shadow. */
+.lift-dark {
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+.lift-dark:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--text) 22%, var(--line));
+  box-shadow: 0 22px 50px -34px color-mix(in srgb, #000 90%, transparent);
+}
+
+/* Amber CTA pill: gains a soft amber glow + tiny lift on hover. */
+.pill-signal {
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.25s ease;
+}
+.pill-signal:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--signal) 35%, transparent),
+    0 10px 30px -10px color-mix(in srgb, var(--signal) 55%, transparent);
+}
+
+/* Leaderboard row: a quiet hairline-brighten + inset tint on hover. */
+.row-hover {
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+.row-hover:hover {
+  background-color: color-mix(in srgb, var(--text) 4%, transparent);
+}
+
+/* Hero per-line mask reveal — a soft clip+rise used for the headline.
+   Driven by a CSS class so it works without JS hydration cost. */
+.line-mask {
+  display: block;
+  overflow: hidden;
+}
+.line-rise {
+  display: block;
+  animation: line-rise 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes line-rise {
+  from {
+    transform: translateY(110%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* Hero-grid + glow classes the /setup page still uses for its header. */
@@ -294,14 +576,31 @@ body {
   html {
     scroll-behavior: auto;
   }
+  /* Freeze every decorative animation. Ambient layers stay visible
+     as static, low-contrast textures — only their motion is removed. */
   .pulse-dot::after,
   .agent-pulse::after,
   .approve-pulse,
   .scroll-cue,
-  .caret::after {
-    animation: none;
+  .caret::after,
+  .blob-a,
+  .blob-b,
+  .blob-c,
+  .blob-d,
+  .radial-bloom,
+  .line-rise {
+    animation: none !important;
   }
-  .card-hover:hover {
+  /* Ensure masked headline lines are visible without the rise animation. */
+  .line-rise {
+    transform: none;
+    opacity: 1;
+  }
+  /* Kill all hover-driven translate so nothing shifts on focus/hover. */
+  .card-hover:hover,
+  .lift-light:hover,
+  .lift-dark:hover,
+  .pill-signal:hover {
     transform: none;
   }
 }

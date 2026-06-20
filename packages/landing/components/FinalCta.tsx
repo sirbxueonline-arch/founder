@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { GITHUB_URL } from "@/lib/config";
 import { Reveal } from "@/components/Reveal";
+import { MeshWhisper } from "@/components/Ambient";
 
 /**
  * Final CTA — light canvas, minimal. A thin headline, the amber "Get Founder"
@@ -10,8 +11,9 @@ import { Reveal } from "@/components/Reveal";
  */
 export function FinalCta() {
   return (
-    <section className="border-t border-hairline bg-canvas">
-      <div className="mx-auto max-w-3xl px-5 py-24 text-center sm:py-32">
+    <section className="relative overflow-hidden border-t border-hairline bg-canvas">
+      <MeshWhisper />
+      <div className="relative mx-auto max-w-3xl px-5 py-24 text-center sm:py-32">
         <Reveal className="flex flex-col items-center">
           <h2 className="max-w-2xl font-display text-3xl font-light leading-[1.12] tracking-[-0.02em] text-ink sm:text-5xl">
             Keep your agents running while you live your life.
@@ -21,7 +23,7 @@ export function FinalCta() {
             href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-10 inline-flex items-center justify-center rounded-full bg-signal px-6 py-3 text-sm font-medium text-[#1b1206] transition-transform hover:-translate-y-px"
+            className="pill-signal mt-10 inline-flex items-center justify-center rounded-full bg-signal px-6 py-3 text-sm font-medium text-[#1b1206]"
           >
             Get Founder
           </a>

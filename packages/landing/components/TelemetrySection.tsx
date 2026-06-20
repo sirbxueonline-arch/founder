@@ -1,5 +1,6 @@
 import { Counters } from "@/components/Counters";
 import { Leaderboard } from "@/components/Leaderboard";
+import { GridField, RadialBloom, DarkVignette } from "@/components/Ambient";
 import type { LiveData } from "@/lib/useLiveData";
 
 /**
@@ -9,8 +10,12 @@ import type { LiveData } from "@/lib/useLiveData";
  */
 export function TelemetrySection({ initial }: { initial: LiveData }) {
   return (
-    <section id="telemetry" className="bg-void text-text">
-      <div className="mx-auto max-w-5xl px-5 py-24 sm:py-32">
+    <section id="telemetry" className="relative overflow-hidden border-t border-line/60 bg-void text-text">
+      {/* Ambient: radial dot-grid + top/bottom vignette for depth. */}
+      <GridField variant="dots" />
+      <DarkVignette />
+
+      <div className="relative mx-auto max-w-5xl px-5 py-24 sm:py-32">
         <div className="max-w-2xl">
           <p className="font-mono text-[0.7rem] uppercase tracking-[0.22em] text-faint">
             Live telemetry
@@ -24,8 +29,12 @@ export function TelemetrySection({ initial }: { initial: LiveData }) {
           </p>
         </div>
 
-        <div className="mt-16">
-          <Counters initial={initial} />
+        <div className="relative mt-16">
+          {/* Slow amber bloom behind the oversized live numbers. */}
+          <RadialBloom className="left-0 top-1/2 h-64 w-[36rem] max-w-full -translate-y-1/2" />
+          <div className="relative">
+            <Counters initial={initial} />
+          </div>
         </div>
 
         <div className="mt-20 border-t border-line pt-12">

@@ -1,6 +1,12 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import {
+  GridField,
+  RadialBloom,
+  DarkVignette,
+  useParallax,
+} from "@/components/Ambient";
 
 interface AgentCard {
   readonly name: string;
@@ -30,10 +36,15 @@ const TERMINAL_LINES: ReadonlyArray<{ prompt: string; text: string; tone: string
  */
 export function ProductSection() {
   const reduce = useReducedMotion();
+  const frameParallax = useParallax(0.6);
 
   return (
-    <section className="bg-void text-text">
-      <div className="mx-auto max-w-6xl px-5 py-24 sm:py-32">
+    <section className="relative overflow-hidden bg-void text-text">
+      {/* Ambient: hairline grid fading radially + top/bottom vignette. */}
+      <GridField variant="lines" />
+      <DarkVignette />
+
+      <div className="relative mx-auto max-w-6xl px-5 py-24 sm:py-32">
         <div className="max-w-2xl">
           <p className="font-mono text-[0.7rem] uppercase tracking-[0.22em] text-faint">
             Remote control
@@ -48,13 +59,14 @@ export function ProductSection() {
         </div>
 
         <div className="mt-14 grid gap-5 lg:grid-cols-[1.55fr_1fr]">
-          {/* ── Mock dashboard frame ─────────────────────────────────── */}
+          {/* ── Mock dashboard frame (gently parallaxed) ─────────────── */}
+          <div ref={frameParallax}>
           <motion.div
             initial={{ opacity: 0, y: reduce ? 0 : 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10% 0px" }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden rounded-2xl border border-line bg-[color-mix(in_srgb,var(--panel)_70%,var(--void))]"
+            className="overflow-hidden rounded-2xl border border-line bg-[color-mix(in_srgb,var(--panel)_70%,var(--void))] lift-dark"
           >
             <div className="flex items-center gap-2 border-b border-line px-4 py-3">
               <span className="flex items-center gap-1.5" aria-hidden>
@@ -80,7 +92,7 @@ export function ProductSection() {
                 {AGENTS.map((agent) => (
                   <div
                     key={agent.name}
-                    className="rounded-xl border border-line bg-void-2 px-3.5 py-3"
+                    className="lift-dark rounded-xl border border-line bg-void-2 px-3.5 py-3"
                   >
                     <div className="flex items-center gap-2">
                       <span className="relative inline-flex h-1.5 w-1.5">
@@ -129,6 +141,7 @@ export function ProductSection() {
               </div>
             </div>
           </motion.div>
+          </div>
 
           {/* ── Focal: Telegram-style remote approve card (the amber glow) ─ */}
           <motion.div
@@ -136,8 +149,10 @@ export function ProductSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10% 0px" }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-            className="flex flex-col justify-center"
+            className="relative flex flex-col justify-center"
           >
+            {/* Slow amber bloom behind the focal approve card. */}
+            <RadialBloom className="-inset-6 -z-10" />
             <p className="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-faint">
               On your phone
             </p>
@@ -160,7 +175,7 @@ export function ProductSection() {
               <div className="mt-4 grid grid-cols-2 gap-2.5">
                 <button
                   type="button"
-                  className="signal-glow-box rounded-xl bg-signal px-4 py-2.5 text-sm font-medium text-[#1b1206] transition-transform hover:-translate-y-px"
+                  className="signal-glow-box pill-signal rounded-xl bg-signal px-4 py-2.5 text-sm font-medium text-[#1b1206]"
                 >
                   Approve
                 </button>

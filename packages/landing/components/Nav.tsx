@@ -57,7 +57,7 @@ export function Nav() {
             href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-full bg-signal px-4 py-1.5 text-sm font-medium text-[#1b1206] transition-transform hover:-translate-y-px"
+            className="pill-signal inline-flex items-center justify-center rounded-full bg-signal px-4 py-1.5 text-sm font-medium text-[#1b1206]"
           >
             Get Founder
           </a>

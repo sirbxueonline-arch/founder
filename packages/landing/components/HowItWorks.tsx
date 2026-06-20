@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/Reveal";
+import { MeshWhisper } from "@/components/Ambient";
 
 const STEPS: ReadonlyArray<{ n: string; title: string; body: string }> = [
   {
@@ -24,8 +25,9 @@ const STEPS: ReadonlyArray<{ n: string; title: string; body: string }> = [
  */
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="border-t border-hairline bg-canvas">
-      <div className="mx-auto max-w-4xl px-5 py-24 sm:py-32">
+    <section id="how-it-works" className="relative overflow-hidden border-t border-hairline bg-canvas">
+      <MeshWhisper />
+      <div className="relative mx-auto max-w-4xl px-5 py-24 sm:py-32">
         <Reveal>
           <p className="font-mono text-[0.7rem] uppercase tracking-[0.22em] text-ink-faint">
             How it works
@@ -41,9 +43,11 @@ export function HowItWorks() {
               key={step.n}
               delay={i * 0.07}
               as="li"
-              className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 border-t border-hairline py-8 sm:gap-x-10"
+              className="group grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 border-t border-hairline py-8 transition-colors duration-300 hover:border-ink/20 sm:gap-x-10"
             >
-              <span className="font-mono text-sm text-ink-faint">{step.n}</span>
+              <span className="font-mono text-sm text-ink-faint transition-colors duration-300 group-hover:text-signal">
+                {step.n}
+              </span>
               <h3 className="text-lg font-medium text-ink">{step.title}</h3>
               <span aria-hidden />
               <p className="max-w-xl text-[0.95rem] leading-relaxed text-ink-muted">

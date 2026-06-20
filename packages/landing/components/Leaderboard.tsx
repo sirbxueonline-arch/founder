@@ -39,7 +39,7 @@ function Row({ row, rank }: { row: LeaderboardRow; rank: number }) {
   const hasData = row.total_tokens > 0 || row.installs > 0;
 
   return (
-    <li className="flex items-center gap-4 border-t border-line py-3.5">
+    <li className="row-hover -mx-3 flex items-center gap-4 rounded-lg border-t border-line px-3 py-3.5">
       <span
         className={`w-6 shrink-0 font-mono text-sm tabular-nums ${
           isLeader ? "text-signal" : "text-faint"
