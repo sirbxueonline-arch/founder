@@ -3,9 +3,9 @@ import Link from "next/link";
 import { GITHUB_URL, SITE_URL } from "@/lib/config";
 
 const PRODUCT_LINKS: ReadonlyArray<{ href: string; label: string }> = [
-  { href: "#features", label: "Features" },
-  { href: "#how-it-works", label: "How it works" },
-  { href: "#telemetry", label: "Live telemetry" },
+  { href: "/#features", label: "Features" },
+  { href: "/#how-it-works", label: "How it works" },
+  { href: "/#telemetry", label: "Live telemetry" },
 ];
 
 export function Footer() {
@@ -69,12 +69,12 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a
-                  href="#telemetry"
+                <Link
+                  href="/setup#telemetry"
                   className="text-sm text-ink-muted transition-colors hover:text-ink"
                 >
                   Telemetry disclosure
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

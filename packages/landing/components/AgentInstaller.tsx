@@ -108,7 +108,7 @@ function ExternalIcon() {
   );
 }
 
-/** A brand-tinted square tile holding an agent's inline logo mark. */
+/** A quiet square tile holding an agent's inline logo mark, tinted by brand. */
 function LogoTile({
   agentId,
   color,
@@ -123,14 +123,8 @@ function LogoTile({
   const Logo = logoForKey(agentId);
   return (
     <span
-      className="flex shrink-0 items-center justify-center rounded-lg border"
-      style={{
-        width: tile,
-        height: tile,
-        color,
-        borderColor: `color-mix(in srgb, ${color} 28%, var(--line))`,
-        backgroundColor: `color-mix(in srgb, ${color} 12%, transparent)`,
-      }}
+      className="flex shrink-0 items-center justify-center rounded-lg border border-hairline bg-canvas-raised"
+      style={{ width: tile, height: tile, color }}
       aria-hidden
     >
       <Logo size={size} />
@@ -188,11 +182,11 @@ export function AgentInstaller() {
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-line bg-[color-mix(in_srgb,var(--panel)_55%,transparent)]">
+    <div className="overflow-hidden rounded-2xl border border-hairline bg-canvas-raised">
       <div className="grid lg:grid-cols-[15rem_1fr]">
         {/* ── Tablist: left rail on desktop, horizontal scroll on mobile ───── */}
-        <div className="border-b border-line p-2 lg:border-b-0 lg:border-r lg:p-2.5">
-          <p className="hidden px-2.5 pb-2 pt-1.5 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-faint lg:block">
+        <div className="border-b border-hairline p-2 lg:border-b-0 lg:border-r lg:p-2.5">
+          <p className="hidden px-2.5 pb-2 pt-1.5 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-ink-faint lg:block">
             Choose your agent
           </p>
           <div
@@ -218,14 +212,14 @@ export function AgentInstaller() {
                   onKeyDown={(e) => onKeyDown(e, i)}
                   className={`group relative flex shrink-0 items-center gap-2.5 whitespace-nowrap rounded-lg px-2.5 py-2 text-left font-display text-sm font-medium transition-colors lg:w-full ${
                     selected
-                      ? "bg-[color-mix(in_srgb,var(--signal)_13%,var(--panel))] text-text shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--signal)_34%,transparent)]"
-                      : "text-muted hover:bg-[color-mix(in_srgb,var(--panel)_75%,transparent)] hover:text-text"
+                      ? "bg-canvas text-ink shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--signal)_45%,transparent)]"
+                      : "text-ink-muted hover:bg-canvas hover:text-ink"
                   }`}
                 >
                   <LogoTile agentId={agent.id} color={agent.color} tile={28} size={16} />
                   <span className="flex min-w-0 flex-col">
                     <span className="truncate leading-tight">{agent.name}</span>
-                    <span className="hidden truncate text-[0.7rem] font-normal text-faint lg:block">
+                    <span className="hidden truncate text-[0.7rem] font-normal text-ink-faint lg:block">
                       {agent.vendor}
                     </span>
                   </span>
@@ -247,16 +241,16 @@ export function AgentInstaller() {
           id={`${baseId}-panel-${active.id}`}
           aria-labelledby={`${baseId}-tab-${active.id}`}
           tabIndex={0}
-          className="bg-[color-mix(in_srgb,var(--void-2)_45%,transparent)] p-5 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-cool sm:p-7"
+          className="bg-canvas-raised p-5 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-signal sm:p-7 lg:border-l-0"
         >
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div className="flex items-start gap-3.5">
               <LogoTile agentId={active.id} color={active.color} tile={44} size={24} />
               <div>
-                <h3 className="font-display text-xl font-semibold tracking-tight text-text">
+                <h3 className="font-display text-xl font-medium tracking-tight text-ink">
                   {active.name}
                 </h3>
-                <p className="mt-0.5 font-mono text-xs text-faint">
+                <p className="mt-0.5 font-mono text-xs text-ink-faint">
                   {active.vendor}
                 </p>
               </div>
@@ -265,18 +259,18 @@ export function AgentInstaller() {
               href={active.link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-[color-mix(in_srgb,var(--panel)_60%,transparent)] px-3 py-1.5 font-mono text-xs text-muted transition-colors hover:border-[var(--cool)] hover:text-cool"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-hairline px-3 py-1.5 font-mono text-xs text-ink-muted transition-colors hover:border-ink-faint hover:text-ink"
             >
               Docs
               <ExternalIcon />
             </a>
           </div>
 
-          <p className="mt-4 max-w-xl text-sm text-muted leading-relaxed">
+          <p className="mt-4 max-w-xl text-sm text-ink-muted leading-relaxed">
             {active.blurb}
           </p>
 
-          {/* Capability chips */}
+          {/* Capability chips — quiet outlined pills; the first reads as primary. */}
           <ul className="mt-4 flex flex-wrap gap-2">
             {active.tags.map((tag, i) => {
               const primary = i === 0;
@@ -285,8 +279,8 @@ export function AgentInstaller() {
                   key={tag}
                   className={`rounded-full border px-2.5 py-1 font-mono text-[0.68rem] tracking-wide ${
                     primary
-                      ? "border-[color-mix(in_srgb,var(--signal)_40%,var(--line))] bg-[color-mix(in_srgb,var(--signal)_12%,transparent)] text-signal"
-                      : "border-line bg-[color-mix(in_srgb,var(--panel)_55%,transparent)] text-muted"
+                      ? "border-[color-mix(in_srgb,var(--signal)_50%,var(--hairline))] text-signal"
+                      : "border-hairline text-ink-muted"
                   }`}
                 >
                   {tag}
@@ -295,8 +289,8 @@ export function AgentInstaller() {
             })}
           </ul>
 
-          <div className="mt-5 border-t border-line/70 pt-5">
-            <p className="mb-2.5 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-faint">
+          <div className="mt-5 border-t border-hairline pt-5">
+            <p className="mb-2.5 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-ink-faint">
               {active.command ? "Install" : "How to install"}
             </p>
             {active.command ? (
@@ -304,7 +298,7 @@ export function AgentInstaller() {
             ) : (
               <>
                 {active.note ? (
-                  <p className="text-sm text-muted leading-relaxed">
+                  <p className="text-sm text-ink-muted leading-relaxed">
                     {active.note}
                   </p>
                 ) : null}
@@ -312,7 +306,7 @@ export function AgentInstaller() {
                   href={active.link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 inline-flex w-fit items-center gap-2 rounded-lg border border-line bg-[color-mix(in_srgb,var(--void-2)_88%,transparent)] px-4 py-2.5 text-sm font-medium text-text transition-colors hover:border-[var(--cool)] hover:text-cool"
+                  className="mt-4 inline-flex w-fit items-center gap-2 rounded-lg border border-hairline px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:border-ink-faint"
                 >
                   {active.link.label}
                   <ExternalIcon />
@@ -322,7 +316,7 @@ export function AgentInstaller() {
           </div>
 
           {/* Quiet IDE note — not a tab. */}
-          <p className="mt-5 text-xs text-faint leading-relaxed">
+          <p className="mt-5 text-xs text-ink-faint leading-relaxed">
             Cursor, GitHub Copilot, Cline, Windsurf, and Continue are IDE-based —
             they run inside your editor, so there&apos;s no terminal agent to
             install.

@@ -51,10 +51,10 @@ export function OnThisPage({ items }: OnThisPageProps) {
 
   return (
     <nav aria-label="On this page" className="text-sm">
-      <p className="mb-3 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-faint">
+      <p className="mb-3 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-ink-faint">
         On this page
       </p>
-      <ul className="space-y-0.5 border-l border-line">
+      <ul className="space-y-0.5 border-l border-hairline">
         {items.map((item) => {
           const active = item.id === activeId;
           return (
@@ -62,16 +62,16 @@ export function OnThisPage({ items }: OnThisPageProps) {
               <a
                 href={`#${item.id}`}
                 aria-current={active ? "true" : undefined}
-                className={`-ml-px flex items-center gap-2 border-l-2 py-1.5 pl-3.5 transition-colors ${
+                className={`-ml-px flex items-center gap-2 border-l py-1.5 pl-3.5 transition-colors ${
                   active
-                    ? "border-signal text-text"
-                    : "border-transparent text-muted hover:border-line hover:text-text"
+                    ? "border-signal text-ink"
+                    : "border-transparent text-ink-muted hover:border-ink-faint hover:text-ink"
                 }`}
               >
                 {item.step ? (
                   <span
                     className={`font-mono text-[0.7rem] ${
-                      active ? "text-signal" : "text-faint"
+                      active ? "text-signal" : "text-ink-faint"
                     }`}
                   >
                     {item.step}

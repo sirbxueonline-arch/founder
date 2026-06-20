@@ -2,10 +2,10 @@ import Link from "next/link";
 
 import { GITHUB_URL } from "@/lib/config";
 
-/** Diamond ◆ wordmark used across the site. */
+/** Diamond ◆ wordmark used across the site. Root-relative so it works on /setup too. */
 function Wordmark() {
   return (
-    <a href="#top" className="flex items-center gap-2.5" aria-label="Founder home">
+    <Link href="/" className="flex items-center gap-2.5" aria-label="Founder home">
       <span
         className="inline-block h-2 w-2 rotate-45 bg-ink"
         aria-hidden
@@ -13,15 +13,9 @@ function Wordmark() {
       <span className="text-[0.95rem] font-medium tracking-tight text-ink">
         Founder
       </span>
-    </a>
+    </Link>
   );
 }
-
-const LINKS = [
-  { href: "#features", label: "Features" },
-  { href: "#how-it-works", label: "How it works" },
-  { href: "/setup", label: "Setup", external: false },
-];
 
 export function Nav() {
   return (
@@ -31,18 +25,18 @@ export function Nav() {
 
         <div className="flex items-center gap-6">
           <div className="hidden items-center gap-6 sm:flex">
-            <a
-              href="#features"
+            <Link
+              href="/#features"
               className="text-sm text-ink-muted transition-colors hover:text-ink"
             >
               Features
-            </a>
-            <a
-              href="#how-it-works"
+            </Link>
+            <Link
+              href="/#how-it-works"
               className="text-sm text-ink-muted transition-colors hover:text-ink"
             >
               How it works
-            </a>
+            </Link>
             <Link
               href="/setup"
               className="text-sm text-ink-muted transition-colors hover:text-ink"

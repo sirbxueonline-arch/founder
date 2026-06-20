@@ -80,11 +80,11 @@ export function CodeBlock({
   }, [code]);
 
   return (
-    <div className="group/code flex items-stretch overflow-hidden rounded-lg border border-line bg-[color-mix(in_srgb,var(--void-2)_92%,transparent)]">
+    <div className="group/code flex items-stretch overflow-hidden rounded-xl border border-line bg-void">
       {/* Scroll track — owns horizontal overflow so the full command is always
           reachable. min-w-0 lets it shrink instead of pushing the button off. */}
       <div className="relative min-w-0 flex-1">
-        <pre className="overflow-x-auto px-4 py-3 [scrollbar-width:thin]">
+        <pre className="overflow-x-auto px-4 py-3.5 [scrollbar-width:thin]">
           <code className="block whitespace-nowrap font-mono text-[0.82rem] sm:text-sm leading-relaxed text-text">
             {prompt ? (
               <span className="select-none text-faint">{prompt} </span>
@@ -94,7 +94,7 @@ export function CodeBlock({
         </pre>
         {/* Right-edge fade: cue that the command scrolls under the copy button. */}
         <span
-          className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[color-mix(in_srgb,var(--void-2)_92%,transparent)] to-transparent"
+          className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-void to-transparent"
           aria-hidden
         />
       </div>
@@ -104,7 +104,7 @@ export function CodeBlock({
         type="button"
         onClick={onCopy}
         aria-label={copied ? "Copied" : copyLabel}
-        className="flex shrink-0 items-center gap-1.5 self-stretch border-l border-line bg-[color-mix(in_srgb,var(--panel)_55%,transparent)] px-3 text-xs font-medium text-muted transition-colors hover:bg-panel hover:text-text"
+        className="flex shrink-0 items-center gap-1.5 self-stretch border-l border-line px-3.5 text-xs font-medium text-muted transition-colors hover:text-text"
       >
         {copied ? (
           <span className="flex items-center gap-1.5 text-ok">
