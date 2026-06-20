@@ -95,7 +95,7 @@ export function TerminalInputBar({ target }: TerminalInputBarProps) {
   return (
     <div
       className="flex shrink-0 flex-col gap-1.5 border-t p-1.5 hairline"
-      style={{ backgroundColor: "var(--color-panel)" }}
+      style={{ backgroundColor: "var(--color-void)" }}
     >
       {/* Special-keys bar — horizontally scrollable, never wraps / shifts. */}
       <div

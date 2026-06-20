@@ -95,16 +95,7 @@ export function RegisterServerForm({ onRegistered }: RegisterServerFormProps) {
 
   if (!open) {
     return (
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className="mono rounded-md px-3 py-1.5 text-xs font-medium tracking-wider transition-colors"
-        style={{
-          color: "var(--color-cool)",
-          border: "1px solid var(--color-cool)",
-          backgroundColor: "color-mix(in srgb, var(--color-cool) 10%, transparent)",
-        }}
-      >
+      <button type="button" onClick={() => setOpen(true)} className="pill pill-cool">
         + REGISTER SERVER
       </button>
     );
@@ -153,21 +144,12 @@ export function RegisterServerForm({ onRegistered }: RegisterServerFormProps) {
             setOpen(false);
             setError(null);
           }}
-          className="mono rounded-md px-3 py-1.5 text-xs tracking-wider transition-colors"
-          style={{ color: "var(--color-muted)", border: "1px solid var(--color-line)" }}
+          className="pill"
         >
           CANCEL
         </button>
-        <button
-          type="submit"
-          disabled={!isValid || submitting}
-          className="mono rounded-md px-3 py-1.5 text-xs font-medium tracking-wider transition-colors disabled:cursor-not-allowed disabled:opacity-40"
-          style={{
-            color: "var(--color-ok)",
-            border: "1px solid var(--color-ok)",
-            backgroundColor: "color-mix(in srgb, var(--color-ok) 10%, transparent)",
-          }}
-        >
+        {/* SAVE is the form's primary action — amber-outlined. */}
+        <button type="submit" disabled={!isValid || submitting} className="pill pill-primary">
           {submitting ? "SAVING…" : "SAVE"}
         </button>
       </div>

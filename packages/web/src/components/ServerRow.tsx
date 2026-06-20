@@ -58,27 +58,32 @@ function openUrl(port: number): string {
   return `${window.location.protocol}//${window.location.hostname}:${port}/`;
 }
 
+/**
+ * Ghost-pill control. The variant encodes the doc's button vocabulary:
+ *   - "ghost"   neutral, hover lifts border to --cool (Restart, secondary)
+ *   - "cool"    interactive affordance (Start)
+ *   - "primary" amber-outlined, the one live/primary action (Preview)
+ *   - "danger"  neutral until hover, then --alert (Stop, Remove, Stop Preview)
+ */
+type ControlVariant = "ghost" | "cool" | "primary" | "danger";
+
 interface ControlButtonProps {
   label: string;
-  color: string;
+  variant: ControlVariant;
   disabled: boolean;
   onClick: () => void;
 }
 
-function ControlButton({ label, color, disabled, onClick }: ControlButtonProps) {
+const VARIANT_CLASS: Record<ControlVariant, string> = {
+  ghost: "pill",
+  cool: "pill pill-cool",
+  primary: "pill pill-primary",
+  danger: "pill pill-danger",
+};
+
+function ControlButton({ label, variant, disabled, onClick }: ControlButtonProps) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
-      className="mono rounded-md px-2 py-1 text-[0.625rem] font-medium tracking-wider transition-colors disabled:cursor-not-allowed disabled:opacity-40"
-      style={{
-        color,
-        borderColor: color,
-        borderWidth: 1,
-        backgroundColor: `color-mix(in srgb, ${color} 10%, transparent)`,
-      }}
-    >
+    <button type="button" onClick={onClick} disabled={disabled} className={VARIANT_CLASS[variant]}>
       {label}
     </button>
   );
@@ -117,23 +122,26 @@ export function ServerRow({ entry, pending, error, onAction }: ServerRowProps) {
             <Pulse active={isLive} label={isLive ? "Listening" : "Not running"} />
           </span>
           {port !== undefined ? (
+            // Port in mono --cool — semantic = interactive (it's a link to a
+            // running server), per the doc.
             <span
-              className="mono text-base font-semibold leading-none tabular-nums"
-              style={{ color: "var(--color-text)" }}
+              className="mono text-base font-medium leading-none tabular-nums"
+              style={{ color: "var(--color-cool)" }}
             >
               :{port}
             </span>
           ) : (
             <span
-              className="mono text-base font-semibold leading-none"
+              className="mono text-base font-medium leading-none"
               style={{ color: "var(--color-muted)" }}
               title="Registered server — not currently listening"
             >
               {name ?? "—"}
             </span>
           )}
+          {/* Framework in light sans (not mono — it's a label, not an id). */}
           {framework ? (
-            <span className="text-xs" style={{ color: "var(--color-cool)" }}>
+            <span className="text-xs font-light" style={{ color: "var(--color-muted)" }}>
               {framework}
             </span>
           ) : null}
@@ -151,13 +159,7 @@ export function ServerRow({ entry, pending, error, onAction }: ServerRowProps) {
               href={openUrl(port as number)}
               target="_blank"
               rel="noreferrer noopener"
-              className="mono rounded-md px-2 py-1 text-[0.625rem] font-medium tracking-wider transition-colors"
-              style={{
-                color: "var(--color-cool)",
-                borderColor: "var(--color-cool)",
-                borderWidth: 1,
-                backgroundColor: "color-mix(in srgb, var(--color-cool) 10%, transparent)",
-              }}
+              className="pill pill-cool"
             >
               OPEN
             </a>
@@ -167,10 +169,11 @@ export function ServerRow({ entry, pending, error, onAction }: ServerRowProps) {
               this (often localhost-only) dev server, then opens it on the
               dashboard host so a phone over LAN/Tailscale can reach it. Only
               for things that look like a web server. */}
+          {/* Preview is the primary action — the only amber-outlined control. */}
           {showOpen && !isExposed ? (
             <ControlButton
               label={pending ? "PREVIEW…" : "PREVIEW"}
-              color="var(--color-signal)"
+              variant="primary"
               disabled={pending}
               onClick={() => onAction("expose")}
             />
@@ -183,13 +186,7 @@ export function ServerRow({ entry, pending, error, onAction }: ServerRowProps) {
                   href={previewUrl(proxyPort)}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="mono rounded-md px-2 py-1 text-[0.625rem] font-medium tracking-wider transition-colors"
-                  style={{
-                    color: "var(--color-signal)",
-                    borderColor: "var(--color-signal)",
-                    borderWidth: 1,
-                    backgroundColor: "color-mix(in srgb, var(--color-signal) 10%, transparent)",
-                  }}
+                  className="pill pill-primary"
                 >
                   OPEN PREVIEW
                 </a>
@@ -197,21 +194,16 @@ export function ServerRow({ entry, pending, error, onAction }: ServerRowProps) {
                 // HTTPS/remote: the http LAN proxy can't open from here. Render a
                 // disabled, explained chip instead of a dead link to about:blank.
                 <span
-                  className="mono cursor-not-allowed rounded-md px-2 py-1 text-[0.625rem] font-medium tracking-wider opacity-40"
+                  className="pill cursor-not-allowed opacity-40"
                   title={previewUnreachableMessage(proxyPort)}
-                  style={{
-                    color: "var(--color-faint)",
-                    borderColor: "var(--color-faint)",
-                    borderWidth: 1,
-                    backgroundColor: "color-mix(in srgb, var(--color-faint) 10%, transparent)",
-                  }}
+                  style={{ color: "var(--color-faint)" }}
                 >
                   PREVIEW (LAN ONLY)
                 </span>
               )}
               <ControlButton
                 label="STOP PREVIEW"
-                color="var(--color-faint)"
+                variant="danger"
                 disabled={pending}
                 onClick={() => onAction("unexpose")}
               />
@@ -221,7 +213,7 @@ export function ServerRow({ entry, pending, error, onAction }: ServerRowProps) {
           {registered ? (
             <ControlButton
               label="START"
-              color="var(--color-ok)"
+              variant="cool"
               disabled={pending || isLive}
               onClick={() => onAction("start")}
             />
@@ -230,7 +222,7 @@ export function ServerRow({ entry, pending, error, onAction }: ServerRowProps) {
           {registered && isLive ? (
             <ControlButton
               label="RESTART"
-              color="var(--color-signal)"
+              variant="ghost"
               disabled={pending}
               onClick={() => onAction("restart")}
             />
@@ -239,7 +231,7 @@ export function ServerRow({ entry, pending, error, onAction }: ServerRowProps) {
           {pid !== undefined ? (
             <ControlButton
               label="STOP"
-              color="var(--color-alert)"
+              variant="danger"
               disabled={pending}
               onClick={() => onAction("stop")}
             />
@@ -248,7 +240,7 @@ export function ServerRow({ entry, pending, error, onAction }: ServerRowProps) {
           {registered ? (
             <ControlButton
               label="REMOVE"
-              color="var(--color-faint)"
+              variant="danger"
               disabled={pending}
               onClick={() => onAction("remove")}
             />

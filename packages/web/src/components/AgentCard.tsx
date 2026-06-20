@@ -37,7 +37,9 @@ function activityColor(kind: CurrentActivity["kind"]): string {
   switch (kind) {
     case "tool":
     case "prompt":
-      return "var(--color-text)";
+      // The live current-activity line reads in --cool (interactive/info), per
+      // the doc — it's "what the agent is doing", not a status alarm.
+      return "var(--color-cool)";
     case "waiting":
       return "var(--color-signal)";
     case "error":
@@ -55,16 +57,20 @@ export function AgentCard({ session, now, cost }: AgentCardProps) {
   const [reviewing, setReviewing] = useState(false);
 
   return (
-    // Ended sessions sit quietly dimmed so the live ones own the column.
+    // Active cards carry a thin amber left edge + subtle glow; idle/ended cards
+    // are fully neutral (amber appears only when the machine is working). Ended
+    // sessions sit quietly dimmed so the live ones own the column.
     <article
-      className="panel flex flex-col gap-3 p-3 transition-opacity sm:p-4"
+      className={`panel flex flex-col gap-3 p-3.5 transition-opacity sm:p-4${
+        isLive ? " card-active" : ""
+      }`}
       style={{ opacity: isEnded ? 0.62 : 1 }}
     >
       <header className="flex items-center justify-between gap-3">
         <div className="flex min-w-0 items-center gap-2">
           <Pulse active={isLive} label={`${session.project} ${session.status}`} />
           <h3
-            className="mono truncate text-base font-semibold"
+            className="mono truncate text-base font-medium"
             title={session.cwd}
             style={{ color: "var(--color-text)" }}
           >
@@ -109,6 +115,14 @@ export function AgentCard({ session, now, cost }: AgentCardProps) {
                 key={`${a.ts}-${a.kind}-${a.text}`}
                 className="mono flex items-baseline gap-2 text-xs leading-tight"
               >
+                {/* Small --ok marker — a quiet "done" tick before each line. */}
+                <span
+                  className="shrink-0 self-center"
+                  aria-hidden="true"
+                  style={{ color: "var(--color-ok)" }}
+                >
+                  ·
+                </span>
                 <span
                   className="w-8 shrink-0 text-right tabular-nums"
                   style={{ color: "var(--color-faint)" }}
@@ -128,11 +142,7 @@ export function AgentCard({ session, now, cost }: AgentCardProps) {
         <button
           type="button"
           onClick={() => setReviewing(true)}
-          className="mono rounded-md px-3 py-1.5 text-[0.625rem] font-medium tracking-wider transition-colors"
-          style={{
-            color: "var(--color-cool)",
-            border: "1px solid var(--color-line)",
-          }}
+          className="pill pill-cool"
         >
           REVIEW CHANGES
         </button>

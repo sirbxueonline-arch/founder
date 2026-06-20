@@ -22,12 +22,12 @@ export function EmptyState({ title, hint, action }: EmptyStateProps) {
         aria-hidden="true"
       />
       <h2
-        className="text-sm font-medium tracking-wide"
-        style={{ color: "var(--color-muted)" }}
+        className="text-base font-light tracking-tight"
+        style={{ color: "var(--color-text)" }}
       >
         {title}
       </h2>
-      <p className="max-w-sm text-sm leading-relaxed" style={{ color: "var(--color-faint)" }}>
+      <p className="max-w-sm text-sm font-light leading-relaxed" style={{ color: "var(--color-muted)" }}>
         {hint}
       </p>
       {action ? <div className="mt-1">{action}</div> : null}

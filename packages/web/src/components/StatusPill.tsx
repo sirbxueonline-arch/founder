@@ -27,14 +27,20 @@ const STYLES: Record<AgentStatus, PillStyle> = {
 
 export function StatusPill({ status }: StatusPillProps) {
   const { label, color } = STYLES[status];
+  // Amber statuses are "live" — give them the breathing pulse (the one place the
+  // pill spends boldness). Idle/ended/error stay calm hairline chips. Aqua-style:
+  // a thin border + whitespace, not a heavy filled box.
+  const isLive = status === "active" || status === "waiting";
   return (
     <span
-      className="mono inline-flex items-center rounded-md px-2 py-0.5 text-[0.625rem] font-medium tracking-wider"
+      className={`mono inline-flex items-center rounded-full px-2 py-0.5 text-[0.625rem] font-medium tracking-wider${
+        isLive ? " pulse-dot" : ""
+      }`}
       style={{
         color,
-        borderColor: color,
+        borderColor: `color-mix(in srgb, ${color} 55%, transparent)`,
         borderWidth: 1,
-        backgroundColor: `color-mix(in srgb, ${color} 12%, transparent)`,
+        backgroundColor: "transparent",
       }}
     >
       {label}

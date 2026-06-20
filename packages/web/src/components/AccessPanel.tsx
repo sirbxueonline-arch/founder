@@ -253,19 +253,13 @@ function PanelHeader({ onClose }: { onClose: () => void }) {
   return (
     <header className="flex items-start justify-between gap-3 border-b p-3 hairline">
       <div className="min-w-0">
-        <h2 className="text-sm font-semibold tracking-wide" style={{ color: "var(--color-text)" }}>
+        <h2 className="text-base font-light tracking-tight" style={{ color: "var(--color-text)" }}>
           Access from anywhere
         </h2>
         <p className="caption mt-1">reach this dashboard from your phone</p>
       </div>
 
-      <button
-        type="button"
-        onClick={onClose}
-        aria-label="Close"
-        className="mono shrink-0 rounded-md px-2 py-1 text-xs tracking-wider transition-colors"
-        style={{ color: "var(--color-muted)", border: "1px solid var(--color-line)" }}
-      >
+      <button type="button" onClick={onClose} aria-label="Close" className="pill shrink-0">
         CLOSE
       </button>
     </header>
@@ -500,13 +494,7 @@ function TunnelSection({ tunnel, busy, error, onStart, onStop }: TunnelSectionPr
               >
                 {tunnel.url}
               </p>
-              <button
-                type="button"
-                onClick={onStop}
-                disabled={busy}
-                className="mono rounded-md px-3 py-1.5 text-xs font-medium tracking-wider transition-colors disabled:cursor-not-allowed disabled:opacity-40"
-                style={{ color: "var(--color-alert)", border: "1px solid var(--color-alert)" }}
-              >
+              <button type="button" onClick={onStop} disabled={busy} className="pill pill-danger">
                 {busy ? "STOPPING…" : "STOP PUBLIC TUNNEL"}
               </button>
             </div>
@@ -515,12 +503,7 @@ function TunnelSection({ tunnel, busy, error, onStart, onStop }: TunnelSectionPr
               type="button"
               onClick={onStart}
               disabled={busy || tunnel.state === "starting"}
-              className="mono self-start rounded-md px-3 py-1.5 text-xs font-medium tracking-wider transition-colors disabled:cursor-not-allowed disabled:opacity-40"
-              style={{
-                color: "var(--color-signal)",
-                border: "1px solid var(--color-signal)",
-                backgroundColor: "color-mix(in srgb, var(--color-signal) 10%, transparent)",
-              }}
+              className="pill pill-primary self-start"
             >
               {tunnel.state === "starting" || busy ? "STARTING…" : "START PUBLIC TUNNEL"}
             </button>

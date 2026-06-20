@@ -51,11 +51,17 @@ export function Header({
 }: HeaderProps) {
   const conn = CONN[status];
   const anyActive = activeCount > 0;
+  // The dev box this dashboard supervises — shown in faint mono beside the
+  // wordmark, like the landing nav. SSR-safe guard for the rare null host.
+  const host = typeof window !== "undefined" ? window.location.hostname : "";
 
   return (
-    <header className="relative border-b hairline" style={{ backgroundColor: "var(--color-panel)" }}>
-      {/* Sweeping activity line — animates only when something is active. Clipped
-          to the header width so it can never push horizontal overflow. */}
+    // Hairline bottom only — Aqua separates with hairlines, not boxed chrome.
+    // The header sits directly on --void so it reads as one calm telemetry strip.
+    <header className="relative border-b hairline" style={{ backgroundColor: "var(--color-void)" }}>
+      {/* The single permitted flourish: one faint amber sweep under the header,
+          animating only when something is active. Clipped to the header width so
+          it can never push horizontal overflow. */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px overflow-hidden" aria-hidden="true">
         {anyActive ? (
           <div
@@ -69,16 +75,29 @@ export function Header({
       </div>
 
       <div className="flex items-center gap-2 px-3 py-2.5 sm:gap-4 sm:px-4 sm:py-3">
-        {/* Wordmark + active count. Allowed to shrink/truncate so the right-side
-            controls (cost, dot) are never clipped off the edge on mobile. */}
+        {/* Wordmark + hostname + active count. Allowed to shrink/truncate so the
+            right-side controls (cost, dot) are never clipped off on mobile. */}
         <div className="flex min-w-0 flex-1 items-baseline gap-2 sm:gap-3">
           <span
-            className="truncate text-sm font-bold tracking-[0.14em] sm:whitespace-nowrap sm:text-base sm:tracking-[0.18em]"
+            className="flex shrink-0 items-baseline gap-1.5 text-sm font-light tracking-tight sm:text-base"
             style={{ color: "var(--color-text)" }}
           >
-            FOUNDER
+            {/* ◆ diamond wordmark — the same family mark as the landing nav. */}
+            <span aria-hidden="true" style={{ color: "var(--color-signal)" }}>
+              ◆
+            </span>
+            <span>Founder</span>
           </span>
-          <span className="mono shrink-0 text-xs" style={{ color: "var(--color-faint)" }}>
+          {host ? (
+            <span className="mono hidden truncate text-xs sm:inline" style={{ color: "var(--color-faint)" }}>
+              {host}
+            </span>
+          ) : null}
+          {/* Only the live-agents metric is tinted --signal; idle reads neutral. */}
+          <span
+            className="mono shrink-0 text-xs tabular-nums"
+            style={{ color: anyActive ? "var(--color-signal)" : "var(--color-faint)" }}
+          >
             {anyActive ? `${activeCount} active` : "idle"}
           </span>
         </div>
@@ -88,17 +107,13 @@ export function Header({
               drives which agent the terminal launches. */}
           <ModelPicker model={model} agents={agents} onModelChange={onModelChange} />
 
-          {/* Away-surface enabler — visible on desktop AND mobile. */}
+          {/* Away-surface enabler — visible on desktop AND mobile. Cool ghost
+              pill: interactive affordance, neutral until hover lifts it. */}
           <button
             type="button"
             onClick={onOpenAccess}
             aria-label="Access from anywhere"
-            className="mono inline-flex shrink-0 items-center gap-1.5 rounded-md px-2 py-1 text-[0.625rem] tracking-wider transition-colors"
-            style={{
-              color: "var(--color-cool)",
-              border: "1px solid var(--color-cool)",
-              backgroundColor: "color-mix(in srgb, var(--color-cool) 10%, transparent)",
-            }}
+            className="pill pill-cool shrink-0"
           >
             <svg
               width="11"

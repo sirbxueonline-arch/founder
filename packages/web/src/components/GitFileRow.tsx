@@ -164,12 +164,12 @@ export function GitFileRow({
             </button>
           </div>
         ) : (
+          // Neutral until hover, then reveals --alert (destructive vocabulary).
           <button
             type="button"
             onClick={onRequestDiscard}
             disabled={discarding}
-            className="mono shrink-0 rounded px-1.5 py-0.5 text-[0.625rem] font-medium tracking-wider transition-colors disabled:cursor-not-allowed disabled:opacity-40"
-            style={{ color: "var(--color-alert)", borderColor: "var(--color-alert)", borderWidth: 1 }}
+            className="pill pill-danger shrink-0"
           >
             REVERT
           </button>

@@ -1,10 +1,15 @@
-/* Mission Control — telemetry console design system (Tailwind v4) */
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+/* Founder — Aqua "Dashboard expression" design system (Tailwind v4)
+   The dashboard lives on --void full-time: Aqua's dark side come alive with
+   data. It adopts Aqua's *system* — restraint, single-amber discipline,
+   light-weight humanist headings, JetBrains Mono for every number/id/port,
+   1px hairlines + whitespace instead of boxes/shadows — while keeping the data
+   density and semantic status colors a monitoring tool needs. */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap");
 @import "tailwindcss";
 
 /* ── Theme tokens ──────────────────────────────────────────────────────────
-   Exact palette from the build brief §8. Mapped to Tailwind v4 design tokens
-   so utilities like `bg-void`, `text-muted`, `border-line` resolve. */
+   Aligned to the canonical design-system doc §1. `bg-void`, `text-muted`,
+   `border-line`, etc. resolve as Tailwind v4 utilities. */
 @theme {
   --color-void: #0d1014;
   --color-panel: #151b23;
@@ -17,7 +22,10 @@
   --color-ok: #74c69d;
   --color-alert: #e5645a;
 
-  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  /* Display / headings: humanist grotesk carried at a LIGHT weight (Aqua's
+     signature, shared with the landing page). Data/code/numerics: JetBrains
+     Mono — all ports, counts, ids, timestamps, paths, terminal, stat numbers. */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
 }
 
@@ -33,7 +41,9 @@ body {
   background-color: var(--color-void);
   color: var(--color-text);
   font-family: var(--font-sans);
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
@@ -51,7 +61,8 @@ body {
     font-feature-settings: "tnum" 1; /* tabular numerals → no layout shift on counts */
   }
 
-  /* Raised panel surface with a hairline border. */
+  /* Raised panel surface with a single hairline border — never a drop shadow.
+     Aqua separates regions with hairlines + whitespace, not boxes. */
   .panel {
     background-color: var(--color-panel);
     border: 1px solid var(--color-line);
@@ -62,30 +73,104 @@ body {
     border-color: var(--color-line);
   }
 
-  /* Tiny faint caption under stats / labels. */
+  /* Tiny faint caption under stats / labels — small, uppercase, letter-spaced. */
   .caption {
     font-size: 0.625rem;
     line-height: 1;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-faint);
   }
 
-  /* Column / surface heading used at the top of a panel group. Quiet by design
-     — it orients the eye without competing with the live telemetry below it. */
+  /* Column / surface heading at the top of a panel group. Light-weight
+     humanist sans (NOT mono, NOT bold) — it orients the eye calmly without
+     competing with the live telemetry below it. */
   .section-label {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-faint);
+  }
+
+  /* ── Pill buttons (shared vocabulary, doc §3 "Buttons & controls") ───────
+     Default ghost: transparent fill, 1px hairline, neutral text; hover lifts
+     the border to --cool. Primary: amber-outlined (one main action per view).
+     Destructive: neutral until hover, then --alert. */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-line);
+    background-color: transparent;
+    color: var(--color-muted);
     font-family: var(--font-mono);
     font-size: 0.625rem;
     font-weight: 500;
+    letter-spacing: 0.08em;
     line-height: 1;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+    padding: 0.4rem 0.7rem;
+    transition:
+      color 0.18s ease,
+      border-color 0.18s ease,
+      background-color 0.18s ease;
+  }
+  .pill:hover:not(:disabled) {
+    color: var(--color-text);
+    border-color: var(--color-cool);
+  }
+  .pill:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
+
+  /* Primary — amber-outlined, used sparingly (the one live/primary action). */
+  .pill-primary {
+    color: var(--color-signal);
+    border-color: color-mix(in srgb, var(--color-signal) 55%, transparent);
+  }
+  .pill-primary:hover:not(:disabled) {
+    color: var(--color-signal);
+    border-color: var(--color-signal);
+    background-color: color-mix(in srgb, var(--color-signal) 10%, transparent);
+  }
+
+  /* Cool — interactive / links / ports affordance. */
+  .pill-cool {
+    color: var(--color-cool);
+  }
+  .pill-cool:hover:not(:disabled) {
+    color: var(--color-cool);
+    border-color: var(--color-cool);
+    background-color: color-mix(in srgb, var(--color-cool) 8%, transparent);
+  }
+
+  /* Destructive — neutral until hover, then reveals --alert. */
+  .pill-danger {
     color: var(--color-muted);
+  }
+  .pill-danger:hover:not(:disabled) {
+    color: var(--color-alert);
+    border-color: var(--color-alert);
+    background-color: color-mix(in srgb, var(--color-alert) 10%, transparent);
+  }
+
+  /* Active agent card: a thin amber left edge + a subtle glow. Amber appears
+     only when the machine is actually working — idle cards stay fully neutral. */
+  .card-active {
+    border-left: 2px solid var(--color-signal);
+    box-shadow:
+      inset 2px 0 0 -1px color-mix(in srgb, var(--color-signal) 55%, transparent),
+      0 0 18px -10px color-mix(in srgb, var(--color-signal) 50%, transparent);
   }
 }
 
 /* ── Signature motion ───────────────────────────────────────────────────────
-   Amber only appears when something is active. Reduced-motion users get a
+   Amber only animates when something is active. Reduced-motion users get a
    static dot/line (no opacity/box-shadow animation). */
 @media (prefers-reduced-motion: no-preference) {
   @keyframes mc-pulse {

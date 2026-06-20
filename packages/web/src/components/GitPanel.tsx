@@ -245,7 +245,7 @@ function Header({ project, cwd, status, loadState, onClose }: HeaderProps) {
     <header className="flex items-start justify-between gap-3 border-b p-3 hairline">
       <div className="min-w-0">
         <h2
-          className="mono truncate text-sm font-semibold"
+          className="mono truncate text-sm font-medium"
           style={{ color: "var(--color-text)" }}
           title={cwd}
         >
@@ -274,13 +274,7 @@ function Header({ project, cwd, status, loadState, onClose }: HeaderProps) {
         </div>
       </div>
 
-      <button
-        type="button"
-        onClick={onClose}
-        aria-label="Close"
-        className="mono shrink-0 rounded-md px-2 py-1 text-xs tracking-wider transition-colors"
-        style={{ color: "var(--color-muted)", border: "1px solid var(--color-line)" }}
-      >
+      <button type="button" onClick={onClose} aria-label="Close" className="pill shrink-0">
         CLOSE
       </button>
     </header>
@@ -476,27 +470,19 @@ function Footer({
             </button>
           </div>
         ) : (
+          // Destructive but neutral until hover, then reveals --alert.
           <button
             type="button"
             onClick={onRequestDiscardAll}
             disabled={busy}
-            className="mono rounded-md px-2 py-1 text-[0.625rem] font-medium tracking-wider transition-colors disabled:cursor-not-allowed disabled:opacity-40"
-            style={{ color: "var(--color-alert)", border: "1px solid var(--color-alert)" }}
+            className="pill pill-danger"
           >
             REVERT ALL
           </button>
         )}
 
-        <button
-          type="submit"
-          disabled={!canCommit}
-          className="mono rounded-md px-3 py-1.5 text-xs font-medium tracking-wider transition-colors disabled:cursor-not-allowed disabled:opacity-40"
-          style={{
-            color: "var(--color-ok)",
-            border: "1px solid var(--color-ok)",
-            backgroundColor: "color-mix(in srgb, var(--color-ok) 10%, transparent)",
-          }}
-        >
+        {/* COMMIT is the panel's primary action — amber-outlined. */}
+        <button type="submit" disabled={!canCommit} className="pill pill-primary">
           {committing ? "COMMITTING…" : "COMMIT"}
         </button>
       </div>

@@ -42,10 +42,16 @@ function TokenRequired() {
       style={{ backgroundColor: "var(--color-void)" }}
     >
       <div className="panel max-w-md p-8 text-center">
-        <h1 className="text-sm font-bold tracking-[0.18em]" style={{ color: "var(--color-text)" }}>
-          MISSION CONTROL
+        <h1
+          className="flex items-center justify-center gap-2 text-xl font-light tracking-tight"
+          style={{ color: "var(--color-text)" }}
+        >
+          <span aria-hidden="true" style={{ color: "var(--color-signal)" }}>
+            ◆
+          </span>
+          Founder
         </h1>
-        <p className="mt-4 text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
+        <p className="mt-4 text-sm font-light leading-relaxed" style={{ color: "var(--color-muted)" }}>
           An access token is required.
         </p>
         <p className="mono mt-3 text-xs leading-relaxed" style={{ color: "var(--color-faint)" }}>
@@ -247,7 +253,14 @@ function Dashboard({ surface, onSurfaceChange }: DashboardProps) {
           </section>
           <section className="flex min-h-[10rem] flex-1 flex-col gap-2" aria-label="Servers">
             <h2 className="section-label shrink-0 px-1">Servers</h2>
-            <div className="panel min-h-0 flex-1 overflow-y-auto p-2">{serversPanel}</div>
+            {/* A hairline-topped region, not a boxed panel — the server rows are
+                themselves cards, so a second box would double the chrome. */}
+            <div
+              className="min-h-0 flex-1 overflow-y-auto border-t pt-2 hairline"
+              style={{ borderTopColor: "var(--color-line)" }}
+            >
+              {serversPanel}
+            </div>
           </section>
         </div>
         <section className="flex min-h-0 flex-col gap-2" aria-label="Terminal">

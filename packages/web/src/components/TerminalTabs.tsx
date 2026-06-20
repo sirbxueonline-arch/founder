@@ -271,12 +271,14 @@ export function TerminalTabs({ model }: TerminalTabsProps) {
 
   return (
     <div className="flex h-full min-h-0 flex-col">
-      {/* Tab bar */}
+      {/* Tab bar — minimal, hairline bottom only, sits on --void so the whole
+          terminal reads as one Aqua dark frame. Active tab is tinted --signal
+          (the live frame); no heavy borders. */}
       <div
-        className="flex items-center gap-1 border-b p-1 hairline"
+        className="flex items-center gap-1 border-b p-1.5 hairline"
         role="tablist"
         aria-label="Terminal tabs"
-        style={{ backgroundColor: "var(--color-panel)" }}
+        style={{ backgroundColor: "var(--color-void)" }}
       >
         <div className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto">
           {tabs.map((tab) => {
@@ -286,9 +288,12 @@ export function TerminalTabs({ model }: TerminalTabsProps) {
                 key={tab.id}
                 className="mono flex shrink-0 items-center rounded-md text-xs"
                 style={{
-                  color: selected ? "var(--color-text)" : "var(--color-muted)",
-                  backgroundColor: selected ? "var(--color-void)" : "transparent",
-                  border: `1px solid ${selected ? "var(--color-line)" : "transparent"}`,
+                  color: selected ? "var(--color-signal)" : "var(--color-muted)",
+                  backgroundColor: "transparent",
+                  // A thin amber underline marks the active tab; inactive tabs
+                  // carry no border at all — whitespace separates them.
+                  borderBottom: `1.5px solid ${selected ? "var(--color-signal)" : "transparent"}`,
+                  borderRadius: 0,
                 }}
               >
                 <button
@@ -316,22 +321,21 @@ export function TerminalTabs({ model }: TerminalTabsProps) {
           })}
         </div>
 
-        <div className="flex shrink-0 items-center gap-1">
+        <div className="flex shrink-0 items-center gap-1.5">
           <button
             type="button"
             onClick={() => openTab("shell", "Shell")}
-            className="mono rounded-md px-2 py-1 text-xs tracking-wide transition-colors"
-            style={{ color: "var(--color-cool)", border: "1px solid var(--color-line)" }}
+            className="pill pill-cool"
           >
             + Shell
           </button>
+          {/* The agent launch is the live/primary action — amber-outlined. */}
           <button
             type="button"
             onClick={() => agentLaunch && openTab(agentLaunch.key, agentLaunch.name)}
             disabled={!agentLaunch}
             title={agentTitle}
-            className="mono rounded-md px-2 py-1 text-xs tracking-wide transition-colors disabled:cursor-default disabled:opacity-50"
-            style={{ color: "var(--color-signal)", border: "1px solid var(--color-line)" }}
+            className="pill pill-primary"
           >
             {agentLabel}
           </button>

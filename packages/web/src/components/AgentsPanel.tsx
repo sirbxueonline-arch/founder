@@ -88,11 +88,7 @@ export function AgentsPanel({ sessions, now, cost }: AgentsPanelProps) {
             type="button"
             onClick={() => setShowArchived((v) => !v)}
             aria-expanded={showArchived}
-            className="mono self-center rounded-md px-3 py-1.5 text-[0.625rem] font-medium tracking-wider transition-colors"
-            style={{
-              color: "var(--color-muted)",
-              border: "1px solid var(--color-line)",
-            }}
+            className="pill self-center"
           >
             {showArchived
               ? `Hide ${archived.length} ended`
