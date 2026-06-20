@@ -5,7 +5,7 @@ export const GITHUB_URL =
   "https://github.com/sirbxueonline-arch/foundrr";
 
 // Public site URL — used for canonical/OG metadata.
-export const SITE_URL = "https://founderrr.online";
+export const SITE_URL = "https://foundrr.online";
 
 // Server-side revalidation window (seconds) and client poll interval (ms).
 export const SERVER_REVALIDATE_SECONDS = 30;

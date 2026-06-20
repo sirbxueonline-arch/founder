@@ -15,7 +15,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://founderrr.online"),
+  metadataBase: new URL("https://foundrr.online"),
   title: "Founder — supervise your AI coding agents from anywhere",
   description:
     "Supervise your AI coding agents from anywhere — and watch the world's token spend in real time. Open-source, self-hosted dev supervision.",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     description:
       "Supervise your AI coding agents from anywhere — and watch the world's token spend in real time.",
     type: "website",
-    url: "https://founderrr.online",
+    url: "https://foundrr.online",
     siteName: "Founder",
   },
   twitter: {
