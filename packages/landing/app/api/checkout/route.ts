@@ -6,15 +6,17 @@ import { getStripe, PRICE_IDS, SITE_URL, type PlanKey } from "@/lib/stripe";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+const PLANS: ReadonlySet<string> = new Set(["starter", "pro", "team"]);
+
 /**
- * GET /api/checkout?plan=pro|team
+ * GET /api/checkout?plan=starter|pro|team
  * Creates a live Stripe Checkout Session for the chosen subscription price and
- * 303-redirects the browser to Stripe's hosted checkout. Plain GET so a static
- * marketing page can link straight to it with no client JS.
+ * 303-redirects to Stripe's hosted checkout. On success Stripe returns the buyer
+ * to /welcome?session_id=… which shows their freshly-issued license key.
  */
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const plan = req.nextUrl.searchParams.get("plan");
-  if (plan !== "pro" && plan !== "team") {
+  if (!plan || !PLANS.has(plan)) {
     return NextResponse.json({ error: "Unknown plan" }, { status: 400 });
   }
 
@@ -23,7 +25,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
       line_items: [{ price: PRICE_IDS[plan as PlanKey], quantity: 1 }],
-      success_url: `${SITE_URL}/pricing?status=success`,
+      success_url: `${SITE_URL}/welcome?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${SITE_URL}/pricing?status=cancelled`,
       allow_promotion_codes: true,
       billing_address_collection: "auto",

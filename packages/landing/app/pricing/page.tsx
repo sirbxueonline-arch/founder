@@ -7,54 +7,64 @@ import { Footer } from "@/components/Footer";
 export const metadata: Metadata = {
   title: "Foundrr — Pricing",
   description:
-    "Foundrr is free forever on your own machine. Pro and Team add a reliable cloud leash, history sync, and governance.",
+    "Foundrr plans: a managed leash, agent-safety Guard, fleet benchmarking, and team governance.",
   alternates: { canonical: "/pricing" },
 };
 
 interface Tier {
   name: string;
+  plan: "starter" | "pro" | "team";
   price: string;
   cadence: string;
   blurb: string;
   features: ReadonlyArray<string>;
-  plan?: "pro" | "team";
   highlight?: boolean;
 }
 
 const TIERS: ReadonlyArray<Tier> = [
   {
-    name: "Local",
-    price: "$0",
-    cadence: "free forever",
-    blurb: "Everything on your own machine.",
+    name: "Starter",
+    plan: "starter",
+    price: "$3",
+    cadence: "per month",
+    blurb: "Your leash, made reliable — and your history, saved.",
     features: [
-      "Live agent supervision",
-      "Dev servers + one-tap preview",
-      "Built-in multi-AI terminal",
-      "The Telegram leash (best-effort)",
+      "Managed leash relay — priority, guaranteed delivery",
+      "Push notifications (not just Telegram)",
+      "Cloud history sync (1 machine)",
+      "Guard: dangerous-command blocking",
+      "Your personal cost benchmarks",
     ],
   },
   {
     name: "Pro",
+    plan: "pro",
     price: "$7",
     cadence: "per month",
-    blurb: "For the solo dev who lives on the leash.",
+    blurb: "Full agent safety + intelligence for the power solo dev.",
     features: [
-      "Reliable leash — priority delivery",
-      "Cloud history sync across devices",
-      "Multi-machine dashboards",
-      "Priority support",
+      "Everything in Starter, unlimited machines",
+      "Guard (full): prompt-injection + secret-exfil detection, auto-quarantine, live rule updates",
+      "Session replay — searchable, exportable",
+      "AI session insights + anomaly detection",
+      "Fleet benchmarking + cost-saving recommendations",
+      "Slack / Discord approve · Linear / GitHub links",
     ],
-    plan: "pro",
     highlight: true,
   },
   {
     name: "Team",
-    price: "$15",
-    cadence: "per seat / month",
-    blurb: "Governance for AI agents at work.",
-    features: ["Everything in Pro", "Approval audit log", "Roles + SSO", "Policy auto-deny rules"],
     plan: "team",
+    price: "$12",
+    cadence: "per seat / month",
+    blurb: "Govern your whole team's agents.",
+    features: [
+      "Everything in Pro",
+      "Approval audit log (exportable)",
+      "Roles + SSO / SAML",
+      "Org-wide Guard policies",
+      "Shared dashboard + per-seat cost rollups",
+    ],
   },
 ];
 
@@ -86,11 +96,11 @@ export default function PricingPage() {
         <div className="text-center">
           <p className="font-mono text-[0.7rem] uppercase tracking-[0.22em] text-ink-faint">Pricing</p>
           <h1 className="mt-4 font-display text-4xl font-light tracking-[-0.02em] text-ink sm:text-5xl">
-            Start free. Upgrade when the leash earns it.
+            Supervise your agents. Safely.
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-ink-muted">
-            Foundrr is free forever on your own machine. Pro and Team add a reliable cloud leash,
-            history sync, and team governance.
+            A reliable leash, agent-safety Guard, and benchmarks from the whole Foundrr fleet — the
+            things you can&apos;t build alone.
           </p>
         </div>
 
@@ -132,21 +142,12 @@ export default function PricingPage() {
               </ul>
 
               <div className="mt-7">
-                {tier.plan ? (
-                  <a
-                    href={`/api/checkout?plan=${tier.plan}`}
-                    className="inline-flex w-full items-center justify-center rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
-                  >
-                    Subscribe to {tier.name}
-                  </a>
-                ) : (
-                  <a
-                    href="/setup"
-                    className="inline-flex w-full items-center justify-center rounded-full border border-hairline px-5 py-2.5 text-sm font-medium text-ink transition-colors hover:border-ink/25"
-                  >
-                    Get started free
-                  </a>
-                )}
+                <a
+                  href={`/api/checkout?plan=${tier.plan}`}
+                  className="inline-flex w-full items-center justify-center rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-canvas transition-opacity hover:opacity-90"
+                >
+                  Get {tier.name}
+                </a>
               </div>
             </div>
           ))}
