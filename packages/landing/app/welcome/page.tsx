@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { getStripe } from "@/lib/stripe";
-import { getLicenseBySubscription } from "@/lib/license";
+import { upsertLicenseForSubscription } from "@/lib/license";
 import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
@@ -19,8 +19,12 @@ async function keyForSession(sessionId: string | undefined): Promise<string | nu
         ? session.subscription
         : session.subscription?.id;
     if (!subId) return null;
-    const lic = await getLicenseBySubscription(subId);
-    return lic?.license_key ?? null;
+    // Self-mint instead of waiting on the webhook: retrieve the subscription and
+    // upsert the license right here. Idempotent — if the webhook already created
+    // it, this returns the same key. This removes the webhook→welcome race and
+    // the hard dependency on the webhook firing successfully.
+    const sub = await stripe.subscriptions.retrieve(subId);
+    return await upsertLicenseForSubscription(sub, session.customer_details?.email ?? null);
   } catch {
     return null;
   }

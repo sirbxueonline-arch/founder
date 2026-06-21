@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import type Stripe from "stripe";
 
 import { getStripe } from "@/lib/stripe";
-import { planForPrice, updateLicenseStatus, upsertLicense } from "@/lib/license";
+import { updateLicenseStatus, upsertLicenseForSubscription } from "@/lib/license";
 
 // Signature verification needs the raw body + Node crypto → Node runtime.
 export const runtime = "nodejs";
@@ -10,16 +10,7 @@ export const dynamic = "force-dynamic";
 
 /** Upsert a license row from a Stripe subscription object. */
 async function syncSubscription(sub: Stripe.Subscription, email: string | null): Promise<void> {
-  const item = sub.items.data[0];
-  await upsertLicense({
-    subscriptionId: sub.id,
-    customerId: typeof sub.customer === "string" ? sub.customer : (sub.customer?.id ?? null),
-    email,
-    plan: planForPrice(item?.price.id),
-    status: sub.status,
-    seats: item?.quantity ?? 1,
-    currentPeriodEnd: item?.current_period_end ?? null,
-  });
+  await upsertLicenseForSubscription(sub, email);
 }
 
 /**

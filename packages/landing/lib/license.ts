@@ -4,6 +4,8 @@
  * service-role key. We use raw PostgREST (same pattern as lib/supabase.ts) so we
  * don't pull in the Supabase SDK.
  */
+import type Stripe from "stripe";
+
 import { PRICE_IDS } from "./stripe";
 
 export type Plan = "starter" | "pro" | "team";
@@ -115,12 +117,41 @@ export async function upsertLicense(params: UpsertLicenseParams): Promise<string
       : null,
     updated_at: new Date().toISOString(),
   };
-  await fetch(`${SUPABASE_URL}/rest/v1/licenses?on_conflict=stripe_subscription_id`, {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/licenses?on_conflict=stripe_subscription_id`, {
     method: "POST",
     headers: authHeaders({ Prefer: "resolution=merge-duplicates,return=minimal" }),
     body: JSON.stringify([row]),
   });
+  if (!res.ok) {
+    // Surface the failure instead of silently dropping the issuance — the caller
+    // (webhook / welcome) logs it, and a wrong/missing service-role key or an RLS
+    // block becomes diagnosable rather than an empty `licenses` table.
+    const detail = await res.text().catch(() => "");
+    throw new Error(`license upsert failed (${res.status}): ${detail.slice(0, 200)}`);
+  }
   return key;
+}
+
+/**
+ * Build the license params from a Stripe subscription and upsert. Returns the
+ * key. Shared by the webhook (event-driven) AND the /welcome page (self-mint on
+ * load), so issuance never depends on the webhook alone — and the page never
+ * races it. Idempotent: an existing subscription keeps its key.
+ */
+export async function upsertLicenseForSubscription(
+  sub: Stripe.Subscription,
+  email: string | null,
+): Promise<string> {
+  const item = sub.items.data[0];
+  return upsertLicense({
+    subscriptionId: sub.id,
+    customerId: typeof sub.customer === "string" ? sub.customer : (sub.customer?.id ?? null),
+    email,
+    plan: planForPrice(item?.price.id),
+    status: sub.status,
+    seats: item?.quantity ?? 1,
+    currentPeriodEnd: item?.current_period_end ?? null,
+  });
 }
 
 export async function updateLicenseStatus(subscriptionId: string, status: string): Promise<void> {
